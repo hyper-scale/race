@@ -25,8 +25,8 @@ export default function Home() {
             <Popover className="flex items-center justify-between">
               <Link href="/">
                 <a className="flex items-center gap-x-4">
-                    <Image src="/logo.svg" width="60" height="60" alt="" />
-                    <Image src="/hyperscale.svg" width="150" height="80" alt="" />
+                  <Image src="/logo.svg" width="60" height="60" alt="" />
+                  <Image src="/hyperscale.svg" width="150" height="80" alt="" />
                 </a>
               </Link>
               {/* Desktop Navigation */}
@@ -85,6 +85,24 @@ export default function Home() {
           </nav>
 
           <Explanation />
+
+          <div className="bg-white flex items-center justify-center">
+            <footer className="flex flex-col md:flex-row items-center justify-between py-10 max-w-6xl w-full">
+              <div className="flex flex-col md:flex-row w-full max-w-2xl items-center space-x-4">
+                <Link href="/">
+                  <a className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Home</a>
+                </Link>
+                <span className="hidden md:block">//</span>
+                <a href="https://twitter.com/HyperscaleFund" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" rel="external noreferrer" target="_blank" style={{ marginLeft: 0 }}>Twitter</a>
+                <span className="hidden md:block">//</span>
+                <a href="https://discord.com/invite/pVSbzYny2c" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" rel="external noreferrer" target="_blank" style={{ marginLeft: 0 }}>Discord</a>
+              </div>
+              <div className="flex items-center justify-center mt-4 md:mt-0 w-full max-w-2xl">
+                <Image src="/hyperscale.svg" width="150" height="20" alt="" />
+              </div>
+              <div className="w-full max-w-2xl"></div>
+            </footer>
+          </div>
 
           <div className="pointer-events-none">
             <div
