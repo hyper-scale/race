@@ -4,7 +4,12 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        primary: ['Red Rose', 'Segoe UI'],
+        secondary: ['Open Sans', 'Segoe UI'],
+      },
+    },
   },
   plugins: [],
 };
