@@ -1,14 +1,12 @@
-FROM node:14.17-alpine
+FROM node:14-alpine
 
 RUN apk update && apk add python3 g++ make && rm -rf /var/cache/apk/*
-RUN mkdir -p /home/app/ && chown -R node:node /home/app
-WORKDIR /home/app
-COPY --chown=node:node . .
+WORKDIR /usr/src/app
 
-USER node
+COPY package.json .
+RUN yarn --frozen-lockfile
+
 ENV MONGODB_URI "mongodb://mongo:27017/race"
-
-RUN yarn install --frozen-lockfile
-RUN yarn build
-
+COPY . .
+RUN yarn
 CMD ["yarn", "dev"]
