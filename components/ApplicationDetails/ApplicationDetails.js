@@ -16,7 +16,7 @@ const titles = {
   flag: "Flag",
 }; // for future translations
 
-function fetchVoteComponent(voteCount, applicationId) {
+export function fetchVoteComponent(voteCount, applicationId) {
   const { data: session, status } = useSession();
   if (session) {
     return <Vote voteCount={voteCount} applicationId={applicationId} />;
