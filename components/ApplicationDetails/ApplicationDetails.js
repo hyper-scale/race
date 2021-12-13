@@ -19,14 +19,6 @@ const titles = {
 const ApplicationDetails = ({ data }) => {
   const { data: session, status } = useSession();
 
-  // let voteComponent = undefined
-
-  // if (status === "authenticated") {
-  //   voteComponent = <Vote voteCount={voteCount} applicationId={applicationId} />
-  // }
-
-  // session && <Vote voteCount={voteCount} applicationId={applicationId} />
-
   const breadcrumbs = [
     { url: "/", text: "Home" },
     { url: "/dao-race", text: "DAO Race" },
