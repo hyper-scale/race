@@ -24,7 +24,6 @@ export function fetchVoteComponent(voteCount, applicationId) {
 }
 
 const ApplicationDetails = ({ data }) => {
-
   const breadcrumbs = [
     { url: "/", text: "Home" },
     { url: "/dao-race", text: "DAO Race" },
