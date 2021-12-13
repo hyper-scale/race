@@ -16,13 +16,14 @@ const titles = {
   flag: "Flag",
 }; // for future translations
 
-const ApplicationDetails = ({ data }) => {
-  function fetchVoteComponent(voteCount, applicationId) {
-    const { data: session, status } = useSession();
-    if (session) {
-      return <Vote voteCount={voteCount} applicationId={applicationId} />;
-    }
+function fetchVoteComponent(voteCount, applicationId) {
+  const { data: session, status } = useSession();
+  if (session) {
+    return <Vote voteCount={voteCount} applicationId={applicationId} />;
   }
+}
+
+const ApplicationDetails = ({ data }) => {
 
   const breadcrumbs = [
     { url: "/", text: "Home" },
