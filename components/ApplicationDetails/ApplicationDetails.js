@@ -1,6 +1,6 @@
 import Vote from "../Vote";
 import Breadcrumbs from "../Breadcrumbs";
-import { useSession } from "next-auth/react"
+import { useSession } from "next-auth/react";
 
 const titles = {
   name: "Project name",
@@ -17,11 +17,10 @@ const titles = {
 }; // for future translations
 
 const ApplicationDetails = ({ data }) => {
-
   function fetchVoteComponent(voteCount, applicationId) {
-    const { data: session, status } = useSession()
+    const { data: session, status } = useSession();
     if (session) {
-      return <Vote voteCount={voteCount} applicationId={applicationId} />
+      return <Vote voteCount={voteCount} applicationId={applicationId} />;
     }
   }
 
