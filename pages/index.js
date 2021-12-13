@@ -6,7 +6,6 @@ export default function Home() {
   return (
     <Layout>
       <Explanation />
-
       <div className="pointer-events-none">
         <div
           className="absolute top-[-667px] left-[626px] w-[1185px] h-[1186px] opacity-20"
