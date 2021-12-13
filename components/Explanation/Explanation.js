@@ -61,7 +61,7 @@ const Explanation = () => {
           >
             Twitter
           </a>
-          <a className="">{'//'}</a>
+          <a className="">{"//"}</a>
           <a
             className="ml-6 font-medium"
             href="https://twitter.com/HyperscaleFund"
