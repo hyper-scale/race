@@ -16,14 +16,13 @@ const titles = {
   flag: "Flag",
 }; // for future translations
 
-export function fetchVoteComponent(voteCount, applicationId) {
-  const { data: session, status } = useSession();
-  if (session) {
-    return <Vote voteCount={voteCount} applicationId={applicationId} />;
-  }
-}
-
 const ApplicationDetails = ({ data }) => {
+  const { data: session, status } = useSession();
+
+  if (session) {
+    return <Vote voteCount={voteCount} applicationId={applicationId} />
+  }
+
   const breadcrumbs = [
     { url: "/", text: "Home" },
     { url: "/dao-race", text: "DAO Race" },
