@@ -85,6 +85,10 @@ h6 {
   color: #5f75ee;
 }
 
+.separator {
+  color: #5f75ee;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
