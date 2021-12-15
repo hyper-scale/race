@@ -58,7 +58,7 @@ export default function Home({ projects }) {
       </div>
       <div className="flex justify-center">
         <div className="w-screen max-w-7xl px-4 xl:px-0">
-          <h2 className="text-3xl font-extrabold text-gray-900 text-center mt-12">Trending DAO</h2>
+          <h2 className="text-3xl font-extrabold text-gray-900 text-center mt-12">Trending DAOs</h2>
           <Leaderboard data={projects} numRows={5} />
           <div className="mt-4 text-center">
             <LeaderboardButton />
