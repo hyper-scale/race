@@ -1,4 +1,4 @@
-export default function Button({ el, size, color, onClick, href, target, children }) {
+export default function Button({ el, size, responsive, color, onClick, href, target, children }) {
   let classes = ["text-redrose", "font-bold", "focus:outline-none", "focus:ring-2", "focus:ring-offset-2"];
   if (size === "large") {
     classes.push("py-3", "px-12", "rounded-xl", "text-lg");
@@ -10,6 +10,9 @@ export default function Button({ el, size, color, onClick, href, target, childre
   }
   if (color === "primary") {
     classes.push("text-white", "bg-indigo-500", "hover:bg-indigo-600", "focus:ring-indigo-500");
+  }
+  if (responsive === "true") {
+    classes.push("w-full", "sm:w-max");
   }
   if (color === "primary-outline") {
     classes.push(

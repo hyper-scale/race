@@ -19,12 +19,12 @@ export default function Header() {
       <Popover className="flex items-center justify-items-center justify-between">
         <Link href="/">
           <a className="flex items-center gap-x-4">
-            <Image src="/logo.svg" width="60" height="60" alt="" />
+            <Image src="/logo.svg" width="40" height="40" alt="" />
             <Image src="/hyperscale.svg" width="150" height="80" alt="" />
           </a>
         </Link>
         {/* Desktop Navigation */}
-        <div className="hidden md:flex md:items-center md:space-x-4 text-redrose">
+        <div className="hidden md:flex md:items-center space-x-0 xl:space-x-2 text-redrose">
           <a
             href="https://twitter.com/HyperscaleFund"
             className="px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-opacity-30"

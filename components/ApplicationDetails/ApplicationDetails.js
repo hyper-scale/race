@@ -52,7 +52,7 @@ const ApplicationDetails = ({ data }) => {
             <div className="flex flex-row content-center mb-5">
               <div className="flex-1">
                 <dt className="font-semibold">{titles.submittedBy}</dt>
-                <dd>{data.discordId}</dd>
+                <dd>{data.discordId ?? data.userName}</dd>
               </div>
               <div className="flex flex-row h-[fit-content]">
                 <div
@@ -88,7 +88,7 @@ const ApplicationDetails = ({ data }) => {
         </div>
         <dl>
           <dt className="font-semibold">{titles.description}</dt>
-          <dd className="mb-5">{data.description || "N.A."}</dd>
+          <dd className="mb-5">{data.productPitch || "N.A."}</dd>
           <dt className="font-semibold">{titles.founderBackground}</dt>
           <dd className="mb-5">{data.founderBackground || "N.A"}</dd>
           <dt className="font-semibold">{titles.evidenceOfExceptionalAbility}</dt>

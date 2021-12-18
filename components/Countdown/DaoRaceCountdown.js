@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 
 function CountdownElem({ value, label }) {
   return (
-    <div className="flex-1 p-2 flex flex-col items-center shadow-md rounded-md">
+    <div className="flex flex-col w-28 h-20 justify-center items-center shadow-md rounded-md">
       <span className="text-2xl font-bold">{value}</span>
       <span className="text-xs text-gray-500">{label}</span>
     </div>
@@ -26,7 +26,7 @@ function Countdown({ until }) {
   const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
   return (
-    <div className="flex-1 flex flex-row space-x-2">
+    <div className="flex-1 flex flex-row justify-end space-x-2">
       <CountdownElem value={days} label={days === 1 ? "Day" : "Days"} />
       <CountdownElem value={hours} label={hours === 1 ? "Hour" : "Hours"} />
       <CountdownElem value={minutes} label={minutes === 1 ? "Minute" : "Minutes"} />

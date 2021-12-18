@@ -9,22 +9,22 @@ const ExpandedComponent = ({ data }) => {
   const links = data.helpfulLinks?.split(",") ?? [];
   return (
     <div className="p-6 top-border row-child">
-      <div className="flex gap-x-12 mb-2">
+      <div className="flex-row md:flex gap-x-12 mb-2">
         <div className="basis-1/3">
           <dl>
             <dt className="font-semibold">Pitch us your project in a tweet</dt>
-            <dd className="mb-5">{data.productPitch || "N.A."}</dd>
+            <dd className="mb-5">{data.projectTweet || "N.A."}</dd>
           </dl>
         </div>
         <div className="basis-2/3">
           <dl>
             <dt className="font-semibold">Background of each founder</dt>
-            <dd className="mb-5">{data.evidenceOfExceptionalAbility || "N.A"}</dd>
+            <dd className="mb-5">{data.founderBackground || "N.A"}</dd>
           </dl>
         </div>
       </div>
-      <div className="flex gap-x-12 mb-2">
-        <div className="basis-1/3">
+      <div className="flex-row gap-x-12 mb-2">
+        <div className="basis-1/3 mb-5 md:mb-0">
           {links && (
             <ul>
               {links.map((link, i) => (
@@ -39,6 +39,7 @@ const ExpandedComponent = ({ data }) => {
         </div>
         <div className="basis-2/3">
           <Button
+            responsive="true"
             color="primary-outline"
             onClick={() => router.push({ pathname: "/dao-race/[id]", query: { id: data._id } })}
           >
@@ -104,11 +105,35 @@ const customStyles = {
 
 const columns = [
   {
+    id: "colRank",
     name: "Rank",
     selector: (row) => row.rank,
   },
   {
+    id: "colLdVotes",
     name: "Votes",
+
+    selector: (row) => (
+      <label
+        className="vote-badge"
+        style={{
+          background:
+            "linear-gradient(90deg,rgba(228, 241, 252, 100%) 0%,rgba(218, 223, 252, 100%) 35%,rgba(236, 229, 249, 100%) 100%)",
+        }}
+      >
+        {row.voteCount}
+      </label>
+    ),
+  },
+  {
+    name: "Name",
+    width: "140px",
+    selector: (row) => row.projectName ?? placeholderDiv,
+  },
+  {
+    id: "colSdVotes",
+    name: "Votes",
+
     selector: (row) => (
       <label
         className="vote-badge"
@@ -123,12 +148,9 @@ const columns = [
     ),
   },
   {
-    name: "Name",
-    selector: (row) => row.projectName ?? placeholderDiv,
-  },
-  {
     name: "Submitted by",
-    selector: (row) => row.discordId ?? placeholderDiv,
+    hide: "md",
+    selector: (row) => row.discordId ?? row.userName ?? placeholderDiv,
   },
   // {
   //   name: "Date submitted",

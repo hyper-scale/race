@@ -6,9 +6,20 @@ body {
     "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
+.bg-white-grey {
+  background: #00000005;
+}
+
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.text-highlight {
+  display: inline-block;
+  border-bottom: 18px solid #ffd17f;
+  line-height: 4px;
+  padding: 0 2px;
 }
 
 h1,
@@ -74,6 +85,7 @@ button {
 .dtable .vote-badge {
   border-radius: 0.25rem;
   padding: 0.25rem 0.5rem;
+  display: inline-block;
 }
 
 .top-border {
@@ -96,6 +108,58 @@ button {
   color: #5f75ee;
 }
 
+[data-column-id="colSdVotes"] {
+  display: none !important;
+}
+
+@media only screen and (max-width: 960px) {
+  [data-column-id="colSdVotes"] {
+    display: flex !important;
+  }
+
+  [data-column-id="colLdVotes"] {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  [data-column-id="colRank"] {
+    width: 60px !important;
+    min-width: 60px !important;
+    max-width: 60px !important;
+  }
+
+  [data-column-id="colSdVotes"] {
+    width: 50px !important;
+    min-width: 50px !important;
+    max-width: 50px !important;
+  }
+
+  .rdt_TableHeadRow,
+  .rdt_TableRow {
+    width: 92% !important;
+    margin-left: 4% !important;
+    margin-right: 0 !important;
+  }
+
+  .rdt_ExpanderRow {
+    margin: -15px 15px 0;
+  }
+
+  .text-highlight {
+    border-bottom: 10px solid #ffd17f;
+  }
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

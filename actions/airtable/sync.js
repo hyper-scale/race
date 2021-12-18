@@ -6,9 +6,9 @@ export function getAirtableApplicationRecords() {
   return new Promise((r, reject) => {
     const base = Airtable.base(process.env.AIRTABLE_BASE);
     let results = [];
-    base("Table 1")
+    base("Applications")
       .select({
-        view: "Grid view",
+        view: "Responses",
       })
       .eachPage(
         function page(records, fetchNextPage) {
@@ -35,11 +35,11 @@ export function formatAirtableRecords(records) {
     const {
       Email: emailAddress,
       "Project Name": projectName,
-      "Pitch us your project in a tweet": projectTweet,
+      "Short Pitch": projectTweet,
       "Pitch us your product": productPitch,
       "Provide some background on each founder": founderBackground,
       "Please state evidence of exceptional ability for each founder": evidenceOfExceptionalAbility,
-      "Is there anything else we should know about?": additionalDetails,
+      "Additional Details": additionalDetails,
       "Helpful links": helpfulLinks,
       Referral: referral,
     } = record;

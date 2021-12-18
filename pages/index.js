@@ -10,12 +10,14 @@ import { useRouter } from "next/router";
 // components
 import Footer from "../components/Footer";
 
+const numRows = 5;
+
 export default function Home({ projects }) {
   const router = useRouter();
 
   function LeaderboardButton() {
     return (
-      <Button size="large" color="dark" onClick={() => router.push({ pathname: "/dao-race" })}>
+      <Button size="large" color="dark" responsive="true" onClick={() => router.push({ pathname: "/dao-race" })}>
         Leaderboard
       </Button>
     );
@@ -41,7 +43,7 @@ export default function Home({ projects }) {
       >
         <div className="flex justify-center">
           <div
-            className="w-screen flex justify-center"
+            className="w-full flex justify-center"
             style={{
               backgroundImage: "url('/img/top-fold-lines-left.png'), url('img/top-fold-lines-right.png')",
               backgroundSize: "contain, contain",
@@ -50,9 +52,9 @@ export default function Home({ projects }) {
               maxWidth: "calc(80rem + 200px)",
             }}
           >
-            <div className="w-screen max-w-7xl px-4 xl:px-0">
+            <div className="w-full max-w-7xl px-4 xl:px-0">
               <Header />
-              <div className="my-16 sm:max-w-md">
+              <div className="my-16 md:max-w-md text-center md:text-left">
                 <Explanation />
                 <div className="mt-8">
                   <LeaderboardButton />
@@ -63,10 +65,10 @@ export default function Home({ projects }) {
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="w-screen max-w-7xl px-4 xl:px-0">
-          <h2 className="text-3xl font-extrabold text-gray-900 text-center mt-12">Trending DAOs</h2>
-          <Leaderboard data={projects} numRows={5} />
-          <div className="mt-4 text-center">
+        <div className="w-full max-w-7xl px-0 md:px-4 xl:px-0">
+          <h2 className="text-4xl font-extrabold text-gray-900 text-center mt-12">Trending DAOs</h2>
+          <Leaderboard data={projects} numRows={numRows} />
+          <div className="mt-4 text-center px-4">
             <LeaderboardButton />
           </div>
         </div>
@@ -86,23 +88,23 @@ export default function Home({ projects }) {
               maxWidth: "calc(80rem + 200px)",
             }}
           >
-            <div className="w-screen text-center max-w-7xl px-4 xl:px-0 py-16">
+            <div className="w-full text-center max-w-7xl px-4 xl:px-0 py-16">
               <div className="text-indigo-500 uppercase mb-2">Join the race!</div>
-              <Image src="/img/hs-icon-community.png" alt="" width={134} height={134} />
+              <Image src="/img/jointherace.svg" alt="" width={134} height={134} />
               <div className="flex justify-center">
-                <h2 className="text-4xl w-screen max-w-3xl">
+                <h2 className="text-4xl w-full max-w-3xl">
                   HyperscaleDAO has a strong community of contributors and advisors.
                 </h2>
               </div>
               <div className="flex justify-center my-8">
-                <div className="w-screen max-w-2xl">
+                <div className="w-full max-w-2xl">
                   Communities are a DAO’s most valuable asset. The winning DAO gets funding and joins the HyperscaleDAO.
                   Recieve $200k for 5% by filling out a simple application. You’ll recieve a decision within 1 week.{" "}
                   {/* <a href="#">Learn More</a> */}
                 </div>
               </div>
               <div className="flex justify-center">
-                <Button color="primary" el="a" href="https://airtable.com/shrLFCXD7BQXUg97K">
+                <Button responsive="true" color="primary" el="a" href="https://airtable.com/shrLFCXD7BQXUg97K">
                   Apply
                 </Button>
               </div>
@@ -116,7 +118,7 @@ export default function Home({ projects }) {
 }
 
 export async function getServerSideProps(context) {
-  const projects = JSON.parse(JSON.stringify(await getApplications()));
+  const projects = JSON.parse(JSON.stringify(await getApplications(numRows)));
   return {
     props: {
       projects,
