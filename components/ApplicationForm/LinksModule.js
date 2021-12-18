@@ -24,10 +24,8 @@ function LinksModule(props) {
                 <div>
                   <button
                     onClick={() => {
-                      console.log(arrayHelpers);
                       arrayHelpers.form.values.links.push("");
                       arrayHelpers.push({});
-                      console.log(arrayHelpers);
                     }}
                     className="p-3 mx-auto border border-indigo-600 rounded-xl text-left font-semibold"
                     style={{ color: "#5F75EE" }}

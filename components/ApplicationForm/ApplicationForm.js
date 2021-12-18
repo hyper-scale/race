@@ -96,9 +96,6 @@ const ApplicationForm = ({}) => {
 
   const onSubmit = (values) => console.log("Form data", values);
 
-  const days = getDays();
-  console.log(`in ${days} days`);
-
   return (
     <div
       id="application-form"
