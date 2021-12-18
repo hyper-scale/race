@@ -5,22 +5,26 @@ function LinksModule(props) {
   const { name, label } = props;
   const { initialValues } = useFormikContext();
   return (
-    <div className="space-y-3">
-      <div id="links-sections" className="flex flex-col space-y-2">
-        <label htmlFor="email" className="mb-2 font-semibold">
+    <div>
+      <div id="links-sections" className="">
+        <label htmlFor="email" className="mb-2 font-bold">
           {label}
         </label>
         <FieldArray key="links" className="w-200">
           {(arrayHelpers) => {
             return (
-              <>
-                {initialValues.links.map((_, index) => {
-                  return (
-                    <>
-                      <Input name={`${name}.${index}`} placeholder="https://" />
-                    </>
-                  );
-                })}
+              <div className="space-y-4">
+                {/* add vertical spacing at this level, eg. space-y-2 */}
+                <div className="">
+                  {initialValues.links.map((_, index) => {
+                    return (
+                      <>
+                        <Input name={`${name}.${index}`} placeholder="http://" />
+                      </>
+                    );
+                  })}
+                </div>
+
                 <div>
                   <button
                     onClick={() => {
@@ -34,7 +38,7 @@ function LinksModule(props) {
                     Add link
                   </button>
                 </div>
-              </>
+              </div>
             );
           }}
         </FieldArray>

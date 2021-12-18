@@ -21,6 +21,11 @@ h6 {
     "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
 }
 
+button {
+  font-family: "Red Rose", "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
+}
+
 * {
   box-sizing: border-box;
 }

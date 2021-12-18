@@ -8,7 +8,7 @@ function FormFooter({ isSubmitting }) {
     submitForm();
   };
   return (
-    <div className="flex flex-row items-center h-28 justify-between">
+    <div className="flex flex-row items-center justify-between">
       <div className="flex flex-row items-center space-x-2">
         <input
           className="form-checkbox border-y-4 border-indigo-500"

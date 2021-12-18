@@ -16,7 +16,7 @@ const ApplicationForm = ({}) => {
       },
       {
         name: "projectName",
-        title: "Project name?",
+        title: "Project name",
         control: "input",
       },
       {
@@ -31,31 +31,30 @@ const ApplicationForm = ({}) => {
         name: "pitchProject",
         title: "Pitch us your project",
         control: "textArea",
-        height: 64,
+        height: 48,
       },
       {
         name: "founderBackground",
         title: "Provide some background on each founder",
         control: "textArea",
-        height: 64,
+        height: 48,
       },
       {
         name: "founderAbility",
         title: "Please state evidence of exceptional ability for each founder",
         control: "textArea",
-        height: 64,
+        height: 48,
       },
       {
         name: "extraInfo",
         title: "Is there anything else we should know about?",
         control: "textArea",
-        height: 60,
+        height: 48,
       },
       {
         name: "links",
         title: "Do you have any links to share?",
         control: "links",
-        height: 60,
       },
       /* DRAG & DROP UPLOAD COMPONENT GOES HERE -- can be integrated in the FormikController */
       {
@@ -108,7 +107,7 @@ const ApplicationForm = ({}) => {
       }}
     >
       <div>
-        <div className="w-1/2 mx-auto flex flex-col space-y-10 py-6">
+        <div className="w-1/2 mx-auto flex flex-col py-6">
           <div className="py-14 px-20 p-3 mb-5 drop-shadow-2xl bg-white rounded-lg">
             <FormHeader />
             <Formik initialValues={initialValues} validationSchema={ApplicationSchema} onSubmit={onSubmit}>
@@ -121,7 +120,7 @@ const ApplicationForm = ({}) => {
                           {formValues.form.map((element, index) => {
                             return (
                               <>
-                                <div className="flex flex-col space-y-6">
+                                <div className="flex flex-col">
                                   <FormikController
                                     control={element.control}
                                     type={element.type}

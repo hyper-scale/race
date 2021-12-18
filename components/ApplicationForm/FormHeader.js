@@ -1,4 +1,5 @@
 function FormHeader({ days }) {
+  days = 2;
   return (
     <div className="mx-auto flex flex-col space-y-4">
       <h1 className="mx-auto text-5xl text-gray-900">Enter the DAO race!</h1>
