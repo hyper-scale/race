@@ -1,281 +1,158 @@
-import FileUploader from "../FileUploader";
 import { Formik, Field, FieldArray } from "formik";
+import * as Yup from "yup";
+import FormHeader from "./FormHeader";
+import FormikController from "./FormikController";
+import DaoRaceCountdown from "../Countdown"
+import { useMemo } from 'react'
 
-function FormHeaderComponent({ value }) {
-  return (
-    <div className="mx-auto flex flex-col space-y-2">
-      <h1 className="mx-auto text-5xl font-extrabold text-gray-900">Enter the DAO race!</h1>
-      <p1 className="mx-auto">Hyperscale Application (next race in {value} days)</p1>
-    </div>
-  );
+
+function getDays() {
+  const epoch = useMemo(() => new Date(process.env.NEXT_PUBLIC_DAO_RACE_EPOCH), []);
+  const intervalDays = useMemo(() => parseInt(process.env.NEXT_PUBLIC_DAO_RACE_INTERVAL_DAYS, 10), []);
 }
 
 const ApplicationForm = ({}) => {
-  const fakeFiles = ["whitepaper.pdf", "yellowpaper.pdf"];
+
+  const TOO_SHORT = "Too short."
+  const TOO_LONG = "Too long."
+
+  const formValues = {
+    form: [
+      {
+        name: "email",
+        title: "Email",
+        control: "input",
+        type: "email",
+      },
+      {
+        name: "projectName",
+        title: "Project name?",
+        control: "input"
+      },
+      {
+        name: "pitchTweet",
+        title: "Pitch us your project in a tweet",
+        control: "textArea",
+        height: 48,
+        limit: 280,
+        maxLength: 280
+      },
+      {
+        name: "pitchProject",
+        title: "Pitch us your project",
+        control: "textArea",
+        height: 64,
+      },
+      {
+        name: "founderBackground",
+        title: "Provide some background on each founder",
+        control: "textArea",
+        height: 64,
+      },
+      {
+        name: "founderAbility",
+        title: "Please state evidence of exceptional ability for each founder",
+        control: "textArea",
+        height: 64,
+      },
+      {
+        name: "extraInfo",
+        title: "Is there anything else we should know about?",
+        control: "textArea",
+        height: 60,
+      },
+      {
+        name: "links",
+        title: "Do you have any links to share?",
+        control: "links",
+        height: 60,
+      },
+      /* DRAG & DROP UPLOAD COMPONENT GOES HERE -- can be integrated in the FormikController */
+      {
+        name: "referral",
+        title: "Referral",
+        control: "input",
+        placeholder: "Optional"
+      },
+      {
+        control: "footer"
+      }
+    ]
+  }
+
+  const ApplicationSchema = Yup.object().shape({
+    email: Yup.string().email().required('Required'),
+    projectName: Yup.string().min(1, TOO_SHORT).max(50, TOO_LONG).required('Required'),
+    projectName: Yup.string().min(1, TOO_SHORT).max(50, TOO_LONG).required('Required'),
+    pitchTweet: Yup.string().min(1, TOO_SHORT).max(280, TOO_LONG).required('Required'),
+    pitchProject: Yup.string().min(1, TOO_SHORT).max(1000, TOO_LONG).required('Required'),
+    founderBackground: Yup.string().min(1, TOO_SHORT).max(1000, 'Too Long!').required('Required'),
+    founderAbility: Yup.string().min(1, TOO_SHORT).max(1000, TOO_LONG).required('Required'),
+    extraInfo: Yup.string().max(1000, TOO_LONG),
+    referral: Yup.string().max(100, TOO_LONG),
+  });
+
+  const initialValues = {
+    email: '',
+    projectName: '',
+    pitchTweet: '',
+    pitchProject: '',
+    founderBackground: '',
+    founderAbility: '',
+    extraInfo: '',
+    links: [''],
+    referral: '',
+  }
+
+  const onSubmit = values => console.log("Form data", values)
 
   return (
-    <div style={{ background: "#46469814" }}>
-      <div className="main">
-        <div className="w-3/5 mx-auto flex flex-col space-y-10 py-6">
-          <FormHeaderComponent />
-
-          <div className="py-14 px-20 rounded-lg" style={{ background: "#46469814" }}>
+    <div
+    id="application-form"
+    className="bg-cover"
+    style={{
+      backgroundImage: "url('/img/application-page-BG.svg')",
+      backgroundSize: "cover",
+      backgroundPosition: "center center",
+      backgroundRepeat: "no-repeat",
+    }}
+    >
+      <div>
+        <div className="w-1/2 mx-auto flex flex-col space-y-10 py-6">
+          <div className="py-14 px-20 p-3 mb-5 drop-shadow-2xl bg-white rounded-lg">
+            <FormHeader />
             <Formik
-              initialValues={{
-                links: [""],
-              }}
-              validate={(values) => {
-                const errors = {};
-                if (!values.email) {
-                  errors.email = "Required";
-                } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-                  errors.email = "Invalid email address";
-                }
-                return errors;
-              }}
-              onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                  console.log(values);
-                  alert(JSON.stringify(values, null, 2));
-                  setSubmitting(true);
-                }, 400);
-              }}
+              initialValues={initialValues}
+              validationSchema={ApplicationSchema}
+              onSubmit={onSubmit}
             >
-              {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
-                <form onSubmit={handleSubmit} className="flex flex-col space-y-6 ">
-                  <div className="flex flex-col">
-                    <label htmlFor="email" className="mb-2 font-semibold">
-                      Email
-                    </label>
-                    <input
-                      className="p-6 h-6 border-b-2 rounded-lg"
-                      id="email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      required
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.email}
-                    />
-                  </div>
+              {({ initialValues, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+                <form className="flex flex-col py-10 space-y-6">
 
-                  <div className="flex flex-col">
-                    <label htmlFor="project-name" className="mb-2 font-semibold">
-                      Project name
-                    </label>
-                    <input
-                      className="p-6 h-6 border-b-2 rounded-lg"
-                      id="project-name"
-                      name="project-name"
-                      type="project-name"
-                      required
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.projectName}
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label htmlFor="pitch-tweet" className="mb-2 font-semibold">
-                      Pitch us your project in a tweet
-                    </label>
-                    <textarea
-                      maxLength={280}
-                      className="p-4 h-36 rounded-lg"
-                      id="pitch-tweet"
-                      name="pitch-tweet"
-                      type="text"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.pitchTweet}
-                      required
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label htmlFor="pitch-full" className="mb-2 font-semibold">
-                      Pitch us your project
-                    </label>
-                    <textarea
-                      className="p-4 h-36 rounded-lg"
-                      id="pitch-full"
-                      name="pitch-full"
-                      type="text"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.pitchFull}
-                      required
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label htmlFor="founder-background" className="mb-2 font-semibold">
-                      Provide some background on each founder
-                    </label>
-                    <textarea
-                      className="p-4 h-36 rounded-lg"
-                      id="founder-background"
-                      name="founder-background"
-                      type="text"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.founderBackground}
-                      required
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label htmlFor="founder-ability" className="mb-2 font-semibold">
-                      Please state evidence of exceptional ability for each founder
-                    </label>
-                    <textarea
-                      className="p-4 h-36 rounded-lg"
-                      id="founder-ability"
-                      name="founder-ability"
-                      type="text"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.founderAbility}
-                      required
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label htmlFor="extra-info" className="mb-2 font-semibold">
-                      Is there anything else we should know about?
-                    </label>
-                    <textarea
-                      placeholder="Optional"
-                      className="p-4 h-36 rounded-lg"
-                      id="extra-info"
-                      name="extra-info"
-                      type="text"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.extraInfo}
-                    />
-                  </div>
-
-                  <div className="space-y-3">
-                    <div id="links-sections" className="flex flex-col space-y-2">
-                      <label htmlFor="email" className="mb-2 font-semibold">
-                        Do you have any links to share?
-                      </label>
-
-                      <FieldArray name="links" className="w-200">
-                        {(arrayHelpers) => {
-                          return (
-                            <>
-                              {values.links.map((_, index) => {
-                                return (
-                                  <>
-                                    <Field
-                                      name={`form.${index}`}
-                                      render={({ field }) => (
-                                        <input
-                                          {...field}
-                                          type="text"
-                                          key={index}
-                                          placeholder="https://"
-                                          className="p-6 h-6 rounded-lg"
-                                          name={`links.${index}`}
-                                        />
-                                      )}
-                                    />
-                                  </>
-                                );
-                              })}
-                              <div>
-                                <button
-                                  onClick={() => arrayHelpers.push({})}
-                                  className="p-3 mx-auto border border-indigo-600 rounded-xl text-left font-semibold"
-                                  style={{ color: "#5F75EE" }}
-                                  type="button"
-                                >
-                                  Add link
-                                </button>
+                  <FieldArray>
+                    {() => {
+                      return (
+                        <>
+                          {formValues.form.map((element, index) => {
+                            return (
+                              <>
+                                <div className="flex flex-col space-y-6">
+                                <FormikController
+                                control={element.control}
+                                type={element.type}
+                                label={element.title}
+                                name={element.name}
+                                placeholder={element.placeholder}
+                                height={element.height}
+                                />
                               </div>
-                            </>
-                          );
-                        }}
-                      </FieldArray>
-                    </div>
-                  </div>
-
-                  <div className="space-y-1">
-                    <div className="flex flex-col">
-                      <label htmlFor="email" className="mb-2 font-semibold">
-                        Do you have any files to share?
-                      </label>
-                    </div>
-
-                    <FileUploader />
-
-                    <div className="flex flex-col">
-                      <label htmlFor="email" className="py-3 mb-2 font-semibold">
-                        Attachments:
-                      </label>
-                    </div>
-
-                    <div className="container flex justify-center mx-auto" style={{ background: "green" }}>
-                      <table id="tbl" className="w-1/1 table-fixed hover:table-fixed" style={{ background: "red" }}>
-                        <tbody>
-                          {fakeFiles.forEach((fileName) => {
-                            <div>
-                              <td>{fileName}</td>
-                              <td>delete</td>
-                            </div>;
+                              </>
+                            )
                           })}
-                        </tbody>
-                      </table>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <label htmlFor="referral" className="mb-2 font-semibold">
-                        Referral
-                      </label>
-                      <input
-                        placeholder="Optional"
-                        className="p-6 h-6 mb-4 border-b-2 rounded-lg"
-                        id="referral"
-                        name="referral"
-                        type="text"
-                      />
-                    </div>
-
-                    <div className="space-y-8">
-                      <div className="mx-auto flex flex-row space-x-2">
-                        <label className="flex mx-auto space-x-1">
-                          <input className="ml-2 mr-1 mb-1 mt-1 inline-block" type="checkbox" required />
-                          <span className="text-sm inline-block">
-                            <div className="flex flex-row space-x-1">
-                              <p1 className="mx-auto font-semibold">I agree to the</p1>{" "}
-                              <a className="font-semibold" href="url" style={{ color: "#5F75EE" }}>
-                                {" "}
-                                Terms{" "}
-                              </a>
-                              <p1 className="font-semibold"> and </p1>
-                              <a className="font-semibold" href="url" style={{ color: "#5F75EE" }}>
-                                {" "}
-                                Privacy Policy
-                              </a>
-                            </div>
-                          </span>
-                        </label>
-                      </div>
-
-                      <div className="flex mx-auto">
-                        <button
-                          style={{ background: "#5F75EE", color: "#fff" }}
-                          className="w-2/4 p-3 mx-auto border border-indigo-600 rounded-xl font-bold"
-                          disabled={isSubmitting}
-                        >
-                          Submit
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                        </>
+                      )
+                    }}
+                  </FieldArray>
                 </form>
               )}
             </Formik>

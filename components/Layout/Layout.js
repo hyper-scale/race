@@ -29,7 +29,7 @@ export default function Layout({ title = "Hyperscale", children }) {
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="w-screen max-w-7xl px-4 xl:px-0">{children}</div>
+        <div className="w-screen px-4 xl:px-0">{children}</div>
       </div>
       <div className="mt-12">
         <Footer />

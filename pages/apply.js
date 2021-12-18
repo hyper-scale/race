@@ -3,8 +3,10 @@ import ApplicationForm from "../components/ApplicationForm/ApplicationForm";
 
 export default function Apply({}) {
   return (
-    <Layout>
-      <ApplicationForm />
-    </Layout>
+    <div>
+      <Layout className="w-screen max-w-3xl px-4 xl:px-0">
+        <ApplicationForm />
+      </Layout>
+    </div>
   );
 }
