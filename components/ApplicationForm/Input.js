@@ -1,4 +1,4 @@
-import { Field, ErrorMessage, useFormikContext } from "formik";
+import { Field, ErrorMessage } from "formik";
 
 function Input(props) {
   const { name, label, ...rest } = props;
@@ -9,12 +9,14 @@ function Input(props) {
           {label}
         </label>
         <ErrorMessage name={name}>
-          { msg => <div className="mb-2 font-semibold text-[14px]" style={{ color: 'red' }}>{msg}</div> }
+          {(msg) => (
+            <div className="mb-2 font-semibold text-[14px]" style={{ color: "red" }}>
+              {msg}
+            </div>
+          )}
         </ErrorMessage>
       </div>
       <Field className="p-5 h-6 rounded-lg border-2 border-[#D8D8D8]" name={name} {...rest} />
-
-      {/* <ErrorMessage name={name} /> */}
     </div>
   );
 }

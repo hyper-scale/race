@@ -2,20 +2,10 @@ import { Formik, Field, FieldArray } from "formik";
 import * as Yup from "yup";
 import FormHeader from "./FormHeader";
 import FormikController from "./FormikController";
-import DaoRaceCountdown from "../Countdown"
-import { useMemo } from 'react'
-
-
-function getDays() {
-  const epoch = useMemo(() => new Date(process.env.NEXT_PUBLIC_DAO_RACE_EPOCH), []);
-  const intervalDays = useMemo(() => parseInt(process.env.NEXT_PUBLIC_DAO_RACE_INTERVAL_DAYS, 10), []);
-}
 
 const ApplicationForm = ({}) => {
-
-  const TOO_SHORT = "Too short."
-  const TOO_LONG = "Too long."
-
+  const TOO_SHORT = "Too short.";
+  const TOO_LONG = "Too long.";
   const formValues = {
     form: [
       {
@@ -27,7 +17,7 @@ const ApplicationForm = ({}) => {
       {
         name: "projectName",
         title: "Project name?",
-        control: "input"
+        control: "input",
       },
       {
         name: "pitchTweet",
@@ -35,7 +25,7 @@ const ApplicationForm = ({}) => {
         control: "textArea",
         height: 48,
         limit: 280,
-        maxLength: 280
+        maxLength: 280,
       },
       {
         name: "pitchProject",
@@ -72,63 +62,61 @@ const ApplicationForm = ({}) => {
         name: "referral",
         title: "Referral",
         control: "input",
-        placeholder: "Optional"
+        placeholder: "Optional",
       },
       {
-        control: "footer"
-      }
-    ]
-  }
+        control: "footer",
+      },
+    ],
+  };
 
   const ApplicationSchema = Yup.object().shape({
-    email: Yup.string().email().required('Required'),
-    projectName: Yup.string().min(1, TOO_SHORT).max(50, TOO_LONG).required('Required'),
-    projectName: Yup.string().min(1, TOO_SHORT).max(50, TOO_LONG).required('Required'),
-    pitchTweet: Yup.string().min(1, TOO_SHORT).max(280, TOO_LONG).required('Required'),
-    pitchProject: Yup.string().min(1, TOO_SHORT).max(1000, TOO_LONG).required('Required'),
-    founderBackground: Yup.string().min(1, TOO_SHORT).max(1000, 'Too Long!').required('Required'),
-    founderAbility: Yup.string().min(1, TOO_SHORT).max(1000, TOO_LONG).required('Required'),
+    email: Yup.string().email().required("Required"),
+    projectName: Yup.string().min(1, TOO_SHORT).max(50, TOO_LONG).required("Required"),
+    projectName: Yup.string().min(1, TOO_SHORT).max(50, TOO_LONG).required("Required"),
+    pitchTweet: Yup.string().min(1, TOO_SHORT).max(280, TOO_LONG).required("Required"),
+    pitchProject: Yup.string().min(1, TOO_SHORT).max(1000, TOO_LONG).required("Required"),
+    founderBackground: Yup.string().min(1, TOO_SHORT).max(1000, "Too Long!").required("Required"),
+    founderAbility: Yup.string().min(1, TOO_SHORT).max(1000, TOO_LONG).required("Required"),
     extraInfo: Yup.string().max(1000, TOO_LONG),
     referral: Yup.string().max(100, TOO_LONG),
   });
 
   const initialValues = {
-    email: '',
-    projectName: '',
-    pitchTweet: '',
-    pitchProject: '',
-    founderBackground: '',
-    founderAbility: '',
-    extraInfo: '',
-    links: [''],
-    referral: '',
-  }
+    email: "",
+    projectName: "",
+    pitchTweet: "",
+    pitchProject: "",
+    founderBackground: "",
+    founderAbility: "",
+    extraInfo: "",
+    links: [""],
+    referral: "",
+  };
 
-  const onSubmit = values => console.log("Form data", values)
+  const onSubmit = (values) => console.log("Form data", values);
+
+  const days = getDays();
+  console.log(`in ${days} days`);
 
   return (
     <div
-    id="application-form"
-    className="bg-cover"
-    style={{
-      backgroundImage: "url('/img/application-page-BG.svg')",
-      backgroundSize: "cover",
-      backgroundPosition: "center center",
-      backgroundRepeat: "no-repeat",
-    }}
+      id="application-form"
+      className="bg-cover"
+      style={{
+        backgroundImage: "url('/img/application-page-BG.svg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center center",
+        backgroundRepeat: "no-repeat",
+      }}
     >
       <div>
         <div className="w-1/2 mx-auto flex flex-col space-y-10 py-6">
           <div className="py-14 px-20 p-3 mb-5 drop-shadow-2xl bg-white rounded-lg">
             <FormHeader />
-            <Formik
-              initialValues={initialValues}
-              validationSchema={ApplicationSchema}
-              onSubmit={onSubmit}
-            >
-              {({ initialValues, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+            <Formik initialValues={initialValues} validationSchema={ApplicationSchema} onSubmit={onSubmit}>
+              {({}) => (
                 <form className="flex flex-col py-10 space-y-6">
-
                   <FieldArray>
                     {() => {
                       return (
@@ -137,20 +125,20 @@ const ApplicationForm = ({}) => {
                             return (
                               <>
                                 <div className="flex flex-col space-y-6">
-                                <FormikController
-                                control={element.control}
-                                type={element.type}
-                                label={element.title}
-                                name={element.name}
-                                placeholder={element.placeholder}
-                                height={element.height}
-                                />
-                              </div>
+                                  <FormikController
+                                    control={element.control}
+                                    type={element.type}
+                                    label={element.title}
+                                    name={element.name}
+                                    placeholder={element.placeholder}
+                                    height={element.height}
+                                  />
+                                </div>
                               </>
-                            )
+                            );
                           })}
                         </>
-                      )
+                      );
                     }}
                   </FieldArray>
                 </form>

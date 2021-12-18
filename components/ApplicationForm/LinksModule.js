@@ -17,20 +17,17 @@ function LinksModule(props) {
                 {initialValues.links.map((_, index) => {
                   return (
                     <>
-                      <Input
-                        name={`${name}.${index}`}
-                        placeholder="https://"
-                      />
+                      <Input name={`${name}.${index}`} placeholder="https://" />
                     </>
                   );
                 })}
                 <div>
                   <button
                     onClick={() => {
-                      console.log(arrayHelpers)
-                      arrayHelpers.form.values.links.push('')
-                      arrayHelpers.push({})
-                      console.log(arrayHelpers)
+                      console.log(arrayHelpers);
+                      arrayHelpers.form.values.links.push("");
+                      arrayHelpers.push({});
+                      console.log(arrayHelpers);
                     }}
                     className="p-3 mx-auto border border-indigo-600 rounded-xl text-left font-semibold"
                     style={{ color: "#5F75EE" }}

@@ -1,7 +1,7 @@
 import Input from "./Input";
 import TextArea from "./TextArea";
-import LinksModule from "./LinksModule"
-import FormFooter from "./FormFooter"
+import LinksModule from "./LinksModule";
+import FormFooter from "./FormFooter";
 
 function FormikController(props) {
   const { control, ...rest } = props;
@@ -11,9 +11,9 @@ function FormikController(props) {
     case "textArea":
       return <TextArea {...rest} />;
     case "links":
-        return <LinksModule {...rest} />;
+      return <LinksModule {...rest} />;
     case "footer":
-        return <FormFooter {...rest} />
+      return <FormFooter {...rest} />;
     default:
       return null;
   }
