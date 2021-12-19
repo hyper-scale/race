@@ -26,8 +26,8 @@ export default async function sendApplicationReceivedMail(mailto,name){
     let mailOptions = {
         from: process.env.MAIL_FROM,
         to: mailto,
-        subject: 'Nodemailer Project',
-        template:'welcome',
+        subject:  'Application Received',
+        template:'applicationreceived',
         context:{
             name:name
         }
@@ -37,8 +37,7 @@ export default async function sendApplicationReceivedMail(mailto,name){
         console.log(err)
        } 
        else{
-           console.log("mail sent succefully")
+           console.log("mail sent successfully")
        }
     })
 }
-await sendApplicationReceivedMail("aswanthpcg@gmail.com","ash")
