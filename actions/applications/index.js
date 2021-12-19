@@ -29,14 +29,14 @@ export async function getApplications(limit, query, email) {
   const pipeline = [
     {
       $match: {
-        emailAddress: { $exists: true },
-        projectName: { $exists: true },
-        projectTweet: { $exists: true },
-        productPitch: { $exists: true },
-        founderBackground: { $exists: true },
-        evidenceOfExceptionalAbility: { $exists: true },
-        discordId: { $exists: true },
-        submittedAt: { $exists: true },
+        emailAddress: { $exists: true, $ne: null },
+        projectName: { $exists: true, $ne: null },
+        projectTweet: { $exists: true, $ne: null },
+        productPitch: { $exists: true, $ne: null },
+        founderBackground: { $exists: true, $ne: null },
+        evidenceOfExceptionalAbility: { $exists: true, $ne: null },
+        discordId: { $exists: true, $ne: null },
+        submittedAt: { $exists: true, $ne: null },
         $expr: {
           $and: [
             { $gt: [{ $strLenCP: "$emailAddress" }, 0] },
@@ -46,7 +46,6 @@ export async function getApplications(limit, query, email) {
             { $gt: [{ $strLenCP: "$founderBackground" }, 0] },
             { $gt: [{ $strLenCP: "$evidenceOfExceptionalAbility" }, 0] },
             { $gt: [{ $strLenCP: "$discordId" }, 0] },
-            { $ne: [{ $eq: "$submittedAt" }, null] },
           ],
         },
       },
