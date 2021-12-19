@@ -35,8 +35,6 @@ export async function getApplications(limit, query, email) {
         productPitch: { $exists: true, $ne: null },
         founderBackground: { $exists: true, $ne: null },
         evidenceOfExceptionalAbility: { $exists: true, $ne: null },
-        discordId: { $exists: true, $ne: null },
-        submittedAt: { $exists: true, $ne: null },
         $expr: {
           $and: [
             { $gt: [{ $strLenCP: "$emailAddress" }, 0] },
@@ -45,7 +43,6 @@ export async function getApplications(limit, query, email) {
             { $gt: [{ $strLenCP: "$productPitch" }, 0] },
             { $gt: [{ $strLenCP: "$founderBackground" }, 0] },
             { $gt: [{ $strLenCP: "$evidenceOfExceptionalAbility" }, 0] },
-            { $gt: [{ $strLenCP: "$discordId" }, 0] },
           ],
         },
       },
