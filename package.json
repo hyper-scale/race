@@ -28,13 +28,15 @@
     "next": "12.0.7",
     "next-auth": "^4.0.5",
     "next-connect": "^0.11.0",
+    "nodemailer": "^6.7.2",
+    "nodemailer-express-handlebars": "^4.0.0",
     "react": "17.0.2",
     "react-data-table-component": "^7.4.5",
     "react-dom": "17.0.2",
     "styled-components": "^5.3.3",
-    "yup": "^0.32.11",
     "uuid": "^8.3.2",
-    "web3": "^1.6.1"
+    "web3": "^1.6.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.16.5",
