@@ -1617,6 +1617,11 @@
   resolved "https://registry.npmjs.org/@napi-rs/triples/-/triples-1.0.3.tgz"
   integrity sha512-jDJTpta+P4p1NZTFVLHJ/TLFVYVcOqv6l8xwOeBKNPMgY/zDYH/YH7SJbvrr/h1RcS9GzbPcLKGzpuK9cV56UA==
 
+"@next-auth/mongodb-adapter@^0.0.2-next.298":
+  version "0.0.2-next.298"
+  resolved "https://registry.yarnpkg.com/@next-auth/mongodb-adapter/-/mongodb-adapter-0.0.2-next.298.tgz#ae90548dc0a6767106768c6dfc975ac8ab9d65fd"
+  integrity sha512-CsfgTeMaoTwBX1jQK5GDlINzpXWR3CuH99X1boN3i6SjLODmGG9ZFt7g8XX3ga3WsVhzMAHYCoieG2Q9azCY/A==
+
 "@next/env@12.0.7":
   version "12.0.7"
   resolved "https://registry.npmjs.org/@next/env/-/env-12.0.7.tgz"
@@ -6628,6 +6633,14 @@ mongodb-connection-string-url@^2.2.0:
     "@types/whatwg-url" "^8.2.1"
     whatwg-url "^11.0.0"
 
+mongodb-connection-string-url@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/mongodb-connection-string-url/-/mongodb-connection-string-url-2.3.2.tgz#8499f99d9f317e9fa76c16c449451dbaabe477d7"
+  integrity sha512-2LkmS0ny7LamAyhEs2Q+zuFFxeGNSc2DaGHBevjqkoPt7bgh+67mg1sFU6awnMsdLKpdEt7zUy466K9x7RsYcQ==
+  dependencies:
+    "@types/whatwg-url" "^8.2.1"
+    whatwg-url "^11.0.0"
+
 mongodb@4.2.1:
   version "4.2.1"
   resolved "https://registry.npmjs.org/mongodb/-/mongodb-4.2.1.tgz"
@@ -6636,6 +6649,17 @@ mongodb@4.2.1:
     bson "^4.6.0"
     denque "^2.0.1"
     mongodb-connection-string-url "^2.2.0"
+  optionalDependencies:
+    saslprep "^1.0.3"
+
+mongodb@^4.2.2:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-4.2.2.tgz#cd70568bd96003877e35358ad17a0c5de35c6dfd"
+  integrity sha512-zt8rCTnTKyMQppyt63qMnrLM5dbADgUk18ORPF1XbtHLIYCyc9hattaYHi0pqMvNxDpgGgUofSVzS+UQErgTug==
+  dependencies:
+    bson "^4.6.0"
+    denque "^2.0.1"
+    mongodb-connection-string-url "^2.3.2"
   optionalDependencies:
     saslprep "^1.0.3"
 

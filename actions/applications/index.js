@@ -28,6 +28,27 @@ export async function upsertApplications(records) {
 export async function getApplications(limit, query, email) {
   const pipeline = [
     {
+      $match: {
+        emailAddress: { $exists: true, $ne: null },
+        projectName: { $exists: true, $ne: null },
+        projectTweet: { $exists: true, $ne: null },
+        productPitch: { $exists: true, $ne: null },
+        founderBackground: { $exists: true, $ne: null },
+        evidenceOfExceptionalAbility: { $exists: true, $ne: null },
+        $expr: {
+          $and: [
+            { $gt: [{ $strLenCP: "$emailAddress" }, 0] },
+            { $gt: [{ $strLenCP: "$projectName" }, 0] },
+            { $gt: [{ $strLenCP: "$projectTweet" }, 0] },
+            { $gt: [{ $strLenCP: "$productPitch" }, 0] },
+            { $gt: [{ $strLenCP: "$founderBackground" }, 0] },
+            { $gt: [{ $strLenCP: "$evidenceOfExceptionalAbility" }, 0] },
+          ],
+        },
+      },
+    },
+
+    {
       $addFields: {
         // Add the vote count to the application
         voteCount: { $size: "$votes" },
