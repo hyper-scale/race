@@ -2,7 +2,7 @@ import Input from "./Input";
 import TextArea from "./TextArea";
 import LinksModule from "./LinksModule";
 import FormFooter from "./FormFooter";
-import FileUploader from "./FileUploader"
+import FileUploader from "./FileUploader";
 
 function FormikController(props) {
   const { control, ...rest } = props;
@@ -16,7 +16,7 @@ function FormikController(props) {
     case "footer":
       return <FormFooter {...rest} />;
     case "upload":
-      return  <FileUploader {...rest} />
+      return <FileUploader {...rest} />;
     default:
       return null;
   }
