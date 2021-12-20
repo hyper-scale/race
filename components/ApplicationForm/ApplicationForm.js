@@ -56,7 +56,10 @@ const ApplicationForm = ({}) => {
         title: "Do you have any links to share?",
         control: "links",
       },
-      /* DRAG & DROP UPLOAD COMPONENT GOES HERE -- can be integrated in the FormikController */
+      {
+        title: "Do you have any files to share?",
+        control: "upload",
+      },
       {
         name: "referral",
         title: "Referral",

@@ -22,6 +22,7 @@
     "@web3-react/core": "^6.1.9",
     "@web3-react/injected-connector": "^6.0.7",
     "airtable": "^0.11.1",
+    "dropzone": "^6.0.0-beta.2",
     "firebase-admin": "^10.0.1",
     "formik": "^2.2.9",
     "mongodb": "^4.2.2",
@@ -33,10 +34,11 @@
     "react": "17.0.2",
     "react-data-table-component": "^7.4.5",
     "react-dom": "17.0.2",
+    "reactstrap": "^9.0.1",
     "styled-components": "^5.3.3",
-    "yup": "^0.32.11",
     "uuid": "^8.3.2",
-    "web3": "^1.6.1"
+    "web3": "^1.6.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.16.5",
