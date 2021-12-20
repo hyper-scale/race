@@ -7,6 +7,7 @@ function FormFooter({ isSubmitting }) {
   const handleSubmit = () => {
     submitForm();
   };
+
   return (
     <div className="flex flex-row items-center justify-between">
       <div className="flex flex-row items-center space-x-2">
@@ -39,8 +40,7 @@ function FormFooter({ isSubmitting }) {
         style={{ background: "#5F75EE", color: "#fff" }}
         className="w-1/5 h-12 border border-indigo-600 rounded-xl font-bold accent-indigo-900"
         disabled={isSubmitting}
-        onClick={handleSubmit}
-        onSubmit={handleSubmit}
+        type="submit"
       >
         Submit
       </button>

@@ -37,7 +37,7 @@ describe("queryWithSession", () => {
     const { error, result } = await queryWithSession((session) => Promise.reject("query failure"));
 
     expect(result).toBe(null);
-    expect(error).toBe("Database query failed");
+    expect(error?.message).toBe("Database query failed");
   });
 
   it("handles successful database query", async () => {

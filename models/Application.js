@@ -9,12 +9,10 @@ const ApplicationSchema = new Schema({
   emailAddress: {
     type: String,
     required: true,
-    unique: true,
   },
   projectName: {
     type: String,
     required: true,
-    unique: true,
   },
   projectTweet: {
     type: String,

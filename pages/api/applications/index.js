@@ -8,24 +8,37 @@ export default async function handler(req, res) {
   } else if (req.method === "POST") {
     const session = await getSession({ req });
 
-    // if (session) {
-    const application = req?.body;
-    if (!application) {
-      res.status(400).json({ error: "Malformed request", success: false });
-    } else {
-      const { result, error } = await queryWithSession((session) => {
-        Application.create([application], { session });
-      });
-      if (error) {
-        res.status(400).json({ error: error, success: false });
+    if (session) {
+      const body = req?.body;
+      const application = {
+        additionalDetails: body.additionalDetails,
+        discordId: "", // TODO: Get from session
+        emailAddress: body.emailAddress,
+        evidenceOfExceptionalAbility: body.evidenceOfExceptionalAbility,
+        founderBackground: body.founderBackground,
+        helpfulLinks: JSON.stringify(body.helpfulLinks),
+        productPitch: body.productPitch,
+        projectName: body.projectName,
+        projectTweet: body.projectTweet,
+        referral: body.referral,
+        votes: [],
+        submittedAt: new Date().toISOString(),
+      };
+
+      if (!application) {
+        res.status(400).json({ error: "Malformed request", success: false });
       } else {
-        // might need data for email sending
-        res.status(201).json({ success: true, data: result });
+        const { result, error } = await queryWithSession((session) => Application.create([application], { session }));
+        if (error) {
+          res.status(400).json({ error: error, success: false });
+        } else {
+          // might need data for email sending
+          res.status(201).json({ success: true, data: result });
+        }
       }
+    } else {
+      res.status(401).json({ error: "Unauthorized", success: false });
     }
-    // } else {
-    //   res.status(401).json({ error: "Unauthorized", success: false });
-    // }
     res.end();
   } else {
     res.status(405);

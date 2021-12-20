@@ -1,9 +1,13 @@
-import { Formik, Field, FieldArray } from "formik";
+import { useState } from "react";
+import { Form, Formik, Field, FieldArray } from "formik";
 import * as Yup from "yup";
 import FormHeader from "./FormHeader";
 import FormikController from "./FormikController";
 
 const ApplicationForm = ({}) => {
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const TOO_SHORT = "Too short.";
   const TOO_LONG = "Too long.";
   const formValues = {
@@ -96,7 +100,41 @@ const ApplicationForm = ({}) => {
     referral: "",
   };
 
-  const onSubmit = (values) => console.log("Form data", values);
+  const onSubmit = (values, actions) => {
+    fetch(`/api/applications`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        additionalDetails: values.extraInfo,
+        emailAddress: values.email,
+        evidenceOfExceptionalAbility: values.founderAbility,
+        founderBackground: values.founderBackground,
+        helpfulLinks: values.links,
+        productPitch: values.pitchProject,
+        projectName: values.projectName,
+        projectTweet: values.pitchTweet,
+        referral: values.referral,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          setErrorMessage(null);
+          setSuccessMessage(`We've received your application. Thank you!`);
+        } else {
+          throw "Request failed.";
+        }
+      })
+      .catch((error) => {
+        setErrorMessage(`We could not save your application. It failed with error: ${error}. Please try again.`);
+        setSuccessMessage(null);
+      })
+      .finally((response) => {
+        actions.setSubmitting(false);
+        window.scrollTo(0, 0);
+      });
+  };
 
   return (
     <div
@@ -112,35 +150,33 @@ const ApplicationForm = ({}) => {
       <div>
         <div className="w-1/2 mx-auto flex flex-col py-6">
           <div className="py-14 px-20 p-3 mb-5 drop-shadow-2xl bg-white rounded-lg">
+            {(errorMessage || successMessage) && (
+              <div className="mb-4 rounded-sm">
+                {errorMessage && <p className="bg-red-100 p-3">{errorMessage}</p>}
+                {successMessage && <p className="bg-lime-100 p-3">{successMessage}</p>}
+              </div>
+            )}
             <FormHeader />
             <Formik initialValues={initialValues} validationSchema={ApplicationSchema} onSubmit={onSubmit}>
               {({}) => (
-                <form className="flex flex-col py-10 space-y-6">
+                <Form className="flex flex-col py-10 space-y-6">
                   <FieldArray>
-                    {() => {
-                      return (
-                        <>
-                          {formValues.form.map((element, index) => {
-                            return (
-                              <>
-                                <div className="flex flex-col">
-                                  <FormikController
-                                    control={element.control}
-                                    type={element.type}
-                                    label={element.title}
-                                    name={element.name}
-                                    placeholder={element.placeholder}
-                                    height={element.height}
-                                  />
-                                </div>
-                              </>
-                            );
-                          })}
-                        </>
-                      );
-                    }}
+                    {() =>
+                      formValues.form.map((element, index) => (
+                        <div className="flex flex-col" key={index}>
+                          <FormikController
+                            control={element.control}
+                            type={element.type}
+                            label={element.title}
+                            name={element.name}
+                            placeholder={element.placeholder}
+                            height={element.height}
+                          />
+                        </div>
+                      ))
+                    }
                   </FieldArray>
-                </form>
+                </Form>
               )}
             </Formik>
           </div>

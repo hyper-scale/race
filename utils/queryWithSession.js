@@ -34,7 +34,13 @@ export default async function queryWithSession(executor) {
     result = await executor(session);
   } catch (error) {
     // TODO: Log the error
-    return { result: null, error: "Database query failed" };
+    return {
+      result: null,
+      error: {
+        mongoDBError: error,
+        message: "Database query failed",
+      },
+    };
   }
 
   return { result, error: null };

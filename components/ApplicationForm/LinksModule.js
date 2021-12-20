@@ -16,13 +16,9 @@ function LinksModule(props) {
               <div className="space-y-4">
                 {/* add vertical spacing at this level, eg. space-y-2 */}
                 <div className="">
-                  {initialValues.links.map((_, index) => {
-                    return (
-                      <>
-                        <Input name={`${name}.${index}`} placeholder="http://" />
-                      </>
-                    );
-                  })}
+                  {initialValues.links.map((_, index) => (
+                    <Input key={index} name={`${name}.${index}`} placeholder="http://" />
+                  ))}
                 </div>
 
                 <div>
