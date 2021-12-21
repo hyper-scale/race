@@ -3,7 +3,6 @@ import queryWithSession from "../../../utils/queryWithSession";
 import { Types } from "mongoose";
 
 export default async function handler(req, res) {
-  await dbConnect();
   if (req.method === "GET") {
     const { result: application, error } = await queryWithSession((session) =>
       Application.find({ _id: Types.ObjectId(req.param.applicationId) }, null, { session })

@@ -1,4 +1,5 @@
 import Application from "../../models/Application";
+import User from "../../models/User";
 import queryWithSession from "../../utils/queryWithSession";
 import { Types } from "mongoose";
 
@@ -28,6 +29,8 @@ export async function upsertApplications(records) {
 export async function getApplications(options = {}) {
   const { email, limit, order, query } = options;
 
+  const appDetails = limit && limit == 1;
+
   const pipeline = [
     {
       $match: {
@@ -56,7 +59,7 @@ export async function getApplications(options = {}) {
         voteCount: { $size: "$votes" },
 
         // Indicate if user has alredy voted based on email
-        hasUserUpvoted: email ? { $in: [email, "$votes"] } : false,
+        //hasUserUpvoted: email ? { $in: [email, "$votes"] } : false,
         userName: {
           $cond: {
             if: { $eq: [{ $ifNull: ["$emailAddress", 0] }, 0] },
@@ -67,9 +70,13 @@ export async function getApplications(options = {}) {
       },
     },
 
-    // Don't make emails of voters public
-    { $unset: ["votes", "emailAddress"] },
+    // Don't make emails
+    { $unset: ["emailAddress"] },
   ];
+
+  if (!appDetails) {
+    pipeline.push({ $unset: ["votes"] });
+  }
 
   if (order === "date") {
     pipeline.push({ $sort: { submittedAt: -1 } });
@@ -94,6 +101,17 @@ export async function getApplications(options = {}) {
   }
 
   if (aggregate && aggregate.length > 0) {
+    if (appDetails) {
+      const { result: users, error } = await queryWithSession((session) =>
+        User.find({ _id: { $in: aggregate[0].votes } }, { discordId: 1, _id: 0 }, { session: session })
+      );
+      if (users) {
+        aggregate[0].votes = [];
+        users.forEach((user) => {
+          aggregate[0].votes.push({ username: user.discordId.substr(0, user.discordId.indexOf("#")) });
+        });
+      }
+    }
     var lastVoteCount = aggregate[0].voteCount;
     var lastRank = 1;
     aggregate.forEach(function (application, index) {
@@ -116,21 +134,28 @@ export async function getSelectedApplications(applicationId, email) {
   });
 }
 
-export async function addVote(applicationId, voterEmail) {
-  const { result, error } = await queryWithSession((session) =>
+export async function updateVote(applicationId, voterEmail, upsert) {
+  var { result: user, error: user_err } = await queryWithSession((session) =>
+    User.findOne({ email: voterEmail }, null, { session })
+  );
+  if (!user) {
+    // TODO: Handle error
+    console.error(`Failed to find user ${voterEmail}`, user_err);
+    return;
+  }
+  const operation = upsert ? { $addToSet: { votes: user._id } } : { $pull: { votes: user._id } };
+  let { result: app, error: app_err } = await queryWithSession((session) =>
     Application.findOneAndUpdate(
       // Find application by Id
       { _id: applicationId },
-
-      // Add to set so the same email will not be added twice
-      { $addToSet: { votes: voterEmail } }
+      operation
     )
   );
-
-  if (error) {
+  if (app_err) {
     // TODO: Handle error
-    console.error("Failed to add vote to application", error);
+    console.error("Failed to add vote to application", app_err);
+    return;
   }
 
-  return result;
+  return app;
 }

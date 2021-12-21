@@ -43,6 +43,19 @@ export function formatAirtableRecords(records) {
       "Helpful links": helpfulLinks,
       Referral: referral,
     } = record;
+
+    const helpfulUploadsCell = record["Helpful uploads"];
+    let helpfulUploads = [];
+    if (helpfulUploadsCell) {
+      helpfulUploads = helpfulUploadsCell.map((helpfulUpload) => {
+        const { filename: filename, url: url, size: size } = helpfulUpload;
+        return {
+          filename,
+          url,
+          size,
+        };
+      });
+    }
     return {
       emailAddress,
       projectName,
@@ -52,6 +65,7 @@ export function formatAirtableRecords(records) {
       evidenceOfExceptionalAbility,
       additionalDetails,
       helpfulLinks,
+      helpfulUploads: helpfulUploads,
       referral,
     };
   });

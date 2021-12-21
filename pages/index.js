@@ -1,14 +1,47 @@
 import Head from "next/head";
-import Image from "next/image";
 import Header from "../components/Header";
 import Explanation from "../components/Explanation";
 import Leaderboard from "../components/Leaderboard";
 import { getApplications } from "../actions/applications";
 import Button from "../components/atoms/Button";
 import { useRouter } from "next/router";
+import { MenuIcon, XIcon, MapIcon, LightningBoltIcon, UserGroupIcon } from "@heroicons/react/outline";
+import { Popover, Transition } from "@headlessui/react";
+
+// react
+import { Fragment } from "react";
+import Image from "next/image";
+
+// next
+import Link from "next/link";
 
 // components
 import Footer from "../components/Footer";
+
+const navigation = [
+  { name: "Discord", href: "https://discord.com/invite/pVSbzYny2c" },
+  { name: "Twitter", href: "https://twitter.com/HyperscaleFund" },
+];
+
+const airtableUrl = "https://airtable.com/shrLFCXD7BQXUg97K";
+
+const features = [
+  {
+    name: "Problem solving",
+    icon: LightningBoltIcon,
+    desc: "Access top experts in our community through our Bounty Market. Effortlessly solve problems.",
+  },
+  {
+    name: "Strong community",
+    icon: UserGroupIcon,
+    desc: "Hyperscale investments are plugged into our community of developers, experts & fellow founders.",
+  },
+  {
+    name: "Guidance",
+    icon: MapIcon,
+    desc: "Our network of advisors are here to support and guide your project. We work as one to further each other.",
+  },
+];
 
 const numRows = 5;
 
@@ -34,83 +67,137 @@ export default function Home({ projects }) {
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
       <div
+        className="relative bg-white overflow-hidden"
         style={{
-          backgroundImage: "url('/img/top-fold-bg.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center center",
-          backgroundRepeat: "no-repeat",
+          background:
+            "url('/bg-patterns.svg') left top no-repeat, linear-gradient(244.75deg, #D1D5FC -10.92%, #F3F3FA 30.96%, #FFFFFF 110.9%) center center",
         }}
       >
-        <div className="flex justify-center">
+        <div className="pointer-events-none">
           <div
-            className="w-full flex justify-center"
+            className="absolute top-[-667px] left-[626px] w-[1185px] h-[1186px] opacity-20"
             style={{
-              backgroundImage: "url('/img/top-fold-lines-left.png'), url('img/top-fold-lines-right.png')",
-              backgroundSize: "contain, contain",
-              backgroundPosition: "left bottom, right bottom",
-              backgroundRepeat: "no-repeat",
-              maxWidth: "calc(80rem + 200px)",
+              background: "radial-gradient(50% 50% at 50% 50%, #4FFEFE 0%, rgba(93, 186, 239, 0) 100%)",
             }}
-          >
-            <div className="w-full max-w-7xl px-4 xl:px-0">
-              <Header />
-              <div className="my-16 md:max-w-md text-center md:text-left">
-                <Explanation />
-                <div className="mt-8">
-                  <LeaderboardButton />
+          />
+          <div
+            className="absolute top-[-463px] left-[-682px] w-[931px] h-[931px] opacity-20"
+            style={{
+              background: "radial-gradient(50% 50% at 50% 50%, #ED008E 0%, rgba(239, 93, 146, 0) 100%)",
+            }}
+          />
+          <div
+            className="absolute top-[-779px] left-[-82px] w-[1287px] h-[1287px] opacity-30"
+            style={{
+              background: "radial-gradient(50% 50% at 50% 50%, #5D5FEF 0%, rgba(93, 95, 239, 0) 100%)",
+            }}
+          />
+        </div>
+        <div className="relative pt-6 pb-16 sm:pb-24 lg:pb-32">
+          <nav className="relative max-w-7xl mx-auto items-center justify-between px-4 sm:px-6" aria-label="Global">
+            <Header />
+          </nav>
+          <main className="mt-16 mx-auto max-w-7xl px-4 sm:mt-24 sm:px-6 lg:mt-32">
+            <div className="">
+              <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6">
+                <h1>
+                  <span className="mt-1 block text-gray-900 text-4xl tracking-tight font-extrabold sm:text-5xl xl:text-6xl">
+                    <span className="text-highlight">Fast</span> funding for web3 projects
+                  </span>
+                </h1>
+                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+                  <span>Receive up to $1M by competing in the DAO Race.</span>{" "}
+                  <span>Join in 5 min and be voted on by the DAO.</span>
+                </p>
+                <div className="mt-8 sm:max-w-lg sm:mx-auto">
+                  <a
+                    href={airtableUrl}
+                    className="inline-flex items-center px-8 py-2 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-indigo-500 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Join
+                  </a>
                 </div>
               </div>
             </div>
-          </div>
+          </main>
         </div>
       </div>
-      <div className="flex justify-center">
+
+      <div className="flex justify-center relative bg-white py-16 sm:py-24 lg:py-32">
         <div className="w-full max-w-7xl px-0 md:px-4 xl:px-0">
-          <h2 className="text-4xl font-extrabold text-gray-900 text-center mt-12">Trending DAOs</h2>
+          <div className="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl">
+            <h2 className="text-base font-semibold tracking-wider text-indigo-500 uppercase">THE DAO RACE</h2>
+            <p className="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
+              Stay ahead and get funded fast
+            </p>
+            <p className="mt-5 max-w-prose mx-auto text-xl text-gray-500">
+              Every week, DAOs with the highest score get funded.
+            </p>{" "}
+          </div>
           <Leaderboard data={projects} numRows={numRows} />
           <div className="mt-4 text-center px-4">
             <LeaderboardButton />
           </div>
         </div>
       </div>
-      <div
-        className="mt-14"
-        style={{ background: "linear-gradient(180deg, rgba(251,251,255,1) 0%, rgba(255,255,255,1) 100%)" }}
-      >
-        <div className="flex justify-center">
-          <div
-            className="flex justify-center"
-            style={{
-              backgroundImage: "url('/img/top-fold-lines-left.png'), url('img/top-fold-lines-right.png')",
-              backgroundSize: "contain, contain",
-              backgroundPosition: "left bottom, right bottom",
-              backgroundRepeat: "no-repeat",
-              maxWidth: "calc(80rem + 200px)",
-            }}
-          >
-            <div className="w-full text-center max-w-7xl px-4 xl:px-0 py-16">
-              <div className="text-indigo-500 uppercase mb-2">Join the race!</div>
-              <Image src="/img/jointherace.svg" alt="" width={134} height={134} />
-              <div className="flex justify-center">
-                <h2 className="text-4xl w-full max-w-3xl">
-                  HyperscaleDAO has a strong community of contributors and advisors.
-                </h2>
-              </div>
-              <div className="flex justify-center my-8">
-                <div className="w-full max-w-2xl">
-                  Communities are a DAO’s most valuable asset. The winning DAO gets funding and joins the HyperscaleDAO.
-                  Recieve $200k for 5% by filling out a simple application. You’ll recieve a decision within 1 week.{" "}
-                  {/* <a href="#">Learn More</a> */}
+
+      <div className="relative bg-[#FAFAFE] py-16 sm:py-24 lg:py-32">
+        <div className="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl">
+          <h2 className="text-base font-semibold tracking-wider text-indigo-500 uppercase">BENEFITS</h2>
+          <p className="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
+            We provide more than just funding
+          </p>
+          <p className="mt-5 max-w-prose mx-auto text-xl text-gray-500">
+            After funding your project, Hyperscale DAO helps you build and grow.
+          </p>
+          <div className="mt-12 mx-12 md:mx-0">
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+              {features.map((feature) => (
+                <div key={feature.name} className="pt-6">
+                  <div className="flow-root bg-white rounded-lg px-6 pb-8">
+                    <div className="-mt-6">
+                      <div>
+                        <span
+                          className="inline-flex items-center justify-center p-3 bg-white shadow rounded-md transform"
+                          style={{ boxShadow: "0px 4px 16px 0px #3447AE26" }}
+                        >
+                          <feature.icon className="h-6 w-6 text-indigo-500" aria-hidden="true" />
+                        </span>
+                      </div>
+                      <h3 className="mt-8 text-lg font-medium text-indigo-500 tracking-tight">{feature.name}</h3>
+                      <p className="mt-5 text-base text-gray-500">{feature.desc}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="flex justify-center">
-                <Button responsive="true" color="primary" el="a" href="https://airtable.com/shrLFCXD7BQXUg97K">
-                  Apply
-                </Button>
-              </div>
+              ))}
             </div>
           </div>
         </div>
+      </div>
+      <div className="py-16 lg:py-20 lg:px-8 bg-white">
+        <div className="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl">
+          <h2 className="text-base font-semibold tracking-wider text-indigo-500 uppercase">ZERO TO FUNDED</h2>
+          <p className="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
+            Get going in days instead of months
+          </p>
+          <p className="mt-5 max-w-prose mx-auto text-xl text-gray-500">
+            We get to a decision fast so you can focus on execution.
+          </p>{" "}
+        </div>
+        <div className="flex items-center justify-center pt-4 sm:pt-12 lg:pt-20">
+          <img src="/timeline-sm.svg" className="md:hidden" alt="" />
+          <img src="/timeline-lg.svg" className="hidden md:block" alt="" />
+        </div>
+        <div className="flex justify-center column mt-4">
+          <div className="mt-8 sm:max-w-lg sm:mx-auto">
+            <a
+              href={airtableUrl}
+              className="inline-flex items-center px-8 py-2 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-indigo-500 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Join the DAO Race
+            </a>
+          </div>
+        </div>{" "}
       </div>
       <Footer />
     </>

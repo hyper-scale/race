@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 // A super simple expandable component.{JSON.stringify(data, null, 2)}
 const ExpandedComponent = ({ data }) => {
   const router = useRouter();
-  const links = data.helpfulLinks?.split(",") ?? [];
+  const links = data?.helpfulLinks ?? [];
   return (
     <div className="p-6 top-border row-child">
       <div className="flex-row md:flex gap-x-12 mb-2">
@@ -24,7 +24,7 @@ const ExpandedComponent = ({ data }) => {
         </div>
       </div>
       <div className="flex-row gap-x-12 mb-2">
-        <div className="basis-1/3 mb-5 md:mb-0">
+        <div className="basis-1/3 mb-5 md:mb-2">
           {links && (
             <ul>
               {links.map((link, i) => (

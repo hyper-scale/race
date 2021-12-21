@@ -4,7 +4,7 @@ services:
 
   mongo:
     container_name: mongo
-    image: mongo
+    image: mongo:4.4.10
     restart: always
     ports:
       - 27017:27017
@@ -41,7 +41,7 @@ services:
       - .env.docker.example
 
   mongo_seed:
-    image: mongo
+    image: mongo:4.4.10
     links:
       - mongo
     volumes:

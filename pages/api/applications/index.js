@@ -8,8 +8,8 @@ export default async function handler(req, res) {
     return res.status(200).send(await getApplications());
   } else if (req.method === "POST") {
     const session = await getSession({ req });
-    const user = await User.findOne({ email: session.user.email });
     if (session) {
+      const user = await User.findOne({ email: session.user.email });
       const body = req?.body;
       const application = {
         additionalDetails: body.additionalDetails,

@@ -1,5 +1,5 @@
 import { getSession } from "next-auth/react";
-import { addVote } from "../../actions/applications";
+import { updateVote } from "../../actions/applications";
 
 export default async function vote(req, res) {
   if (req.method !== "POST") {
@@ -12,12 +12,14 @@ export default async function vote(req, res) {
   if (session) {
     const applicationId = req?.body?.id;
     const voterEmail = session?.user?.email;
-
     if (!applicationId || !voterEmail) {
       // Bad Request
       res.status(400);
     } else {
-      addVote(applicationId, voterEmail);
+      const result = await updateVote(applicationId, voterEmail, true);
+      if (!result) {
+        res.status(501);
+      }
     }
   } else {
     // Unauthorized
