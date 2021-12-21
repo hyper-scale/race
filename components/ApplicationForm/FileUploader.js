@@ -1,10 +1,36 @@
-import React from "react";
+import { Field, useFormikContext } from "formik";
+import  React  from "react";
 import { ListGroup, ListGroupItem, Row, Button } from "reactstrap";
+
+
+// async function upload(file) {
+//   await fetch({
+//     url: '/api/uploads',
+//     body: file,
+//     method: 'POST'
+//   })
+//   .then(success => {
+//     console.log('OK NICE')
+//   })
+//   .catch(error => {
+//     console.log('NOPE', error)
+//   })
+//   .finally(() => {
+//     console.log('IN FINALLY')
+//   })
+// }
 
 function FileUploader(props) {
   const { label, name } = props;
 
+  const { initialValues, setFieldValue } = useFormikContext();
+
+  // const [filesState, setFilesState] = useState(null);
+
   React.useEffect(async () => {
+
+    var myFiles = []
+
     // we make a dynamic import for the Dropzone, as this component is not made to work on SSR
     const Dropzone = (await import("dropzone")).default;
 
@@ -26,12 +52,46 @@ function FileUploader(props) {
     // delete previous image from the dropzone state
     dz.autoDiscover = false;
 
+    dz.on('addedfile', (file) => {
+
+      // validate file
+
+      // upload file
+      console.log('in here')
+      fetch({
+        url: '/api/uploads',
+        body: file,
+        method: 'POST'
+      })
+      .then(success => {
+        console.log('OK NICE')
+      })
+      .catch(error => {
+        console.log('NOPE', error)
+      })
+      .finally(() => {
+        console.log('IN FINALLY')
+      })
+
+
+      // keep track of added files
+      // let reader = new FileReader()
+      // if (file) {
+      //   reader.readAsDataURL(file)
+      //   console.log(reader.result)
+      // }
+      // myFiles.push(file)
+      // setFilesState(myFiles)
+      // setFieldValue("files", Array.from(myFiles));
+      // console.log(file)
+    })
+
     dz.on("addedfile", function (file) {
       // ...
     });
 
     dz.on("removedfile", function (file) {
-      // ...
+      // remove file from arr
     });
 
     document.getElementsByClassName("dz-preview-multiple")[0].innerHTML = "";
@@ -63,7 +123,26 @@ function FileUploader(props) {
                 />
               </svg>
 
-              <input name={name} className="file  hidden" type="file" id="files" multiple />
+              <Field
+              name={name}
+              // className="file hidden"
+              style={{display:"none"}}
+              type="file"
+              id="files"
+              value={initialValues.files}
+              onChange={(event) => {
+
+                // console.log(event.target)
+                // setFieldValue("files", Array.from(event.currentTarget.files[0]));
+                // const files = event.target.files[0];
+                // let myFiles = Array.from(files);
+                // console.log(myFiles)
+                // setFilesState(myFiles)
+                // formik.setFieldVr
+                // alue("files", myFiles);
+              }}
+              multiple
+              />
               <label className="text-[#767676] text-[16px]" style={{ color: "" }}>
                 Drag and drop some files...
               </label>

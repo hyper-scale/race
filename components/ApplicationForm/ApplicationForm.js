@@ -98,6 +98,7 @@ const ApplicationForm = ({}) => {
     extraInfo: "",
     links: [""],
     referral: "",
+    files: null,
   };
 
   const onSubmit = (values, actions) => {
