@@ -30,7 +30,7 @@ const uploadFile = async (req, res) => {
   const fileName = `applications-uploads/${timestamp}_${req.file.originalname}`;
   const bucket = storage.bucket();
   const file = bucket.file(fileName);
-  console.log("we're here")
+  console.log("we're here");
   let uuid = uuidv4();
   const fileStream = file.createWriteStream({
     metadata: {

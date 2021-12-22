@@ -1,9 +1,7 @@
 import { Field, useFormikContext } from "formik";
 import { format } from "prettier";
-import  React  from "react";
+import React from "react";
 import { ListGroup, ListGroupItem, Row, Button } from "reactstrap";
-
-
 
 function FileUploader(props) {
   const { label, name } = props;
@@ -13,14 +11,13 @@ function FileUploader(props) {
   // const [filesState, setFilesState] = useState(null);
 
   React.useEffect(async () => {
-
-    var myFiles = []
+    var myFiles = [];
 
     // we make a dynamic import for the Dropzone, as this component is not made to work on SSR
     const Dropzone = (await import("dropzone")).default;
 
     var dz = new Dropzone(document.getElementById("dropzone-multiple"), {
-      url: '/',
+      url: "/",
       addRemoveLinks: false,
       method: "post",
       chunking: true,
@@ -37,27 +34,26 @@ function FileUploader(props) {
     // delete previous image from the dropzone state
     dz.autoDiscover = false;
 
-    dz.on('addedfile', (file) => {
-
+    dz.on("addedfile", (file) => {
       // validate file
 
       // upload file
 
       var formdata = new FormData();
-      console.log(file.name, file)
-      formdata.append("file", file)
+      console.log(file.name, file);
+      formdata.append("file", file);
 
       var requestOptions = {
-        method: 'POST',
+        method: "POST",
         body: formdata,
-        redirect: 'follow',
+        redirect: "follow",
       };
 
       fetch(`api/uploads`, requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
-    })
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.log("error", error));
+    });
 
     dz.on("removedfile", (file) => {
       // ...
@@ -93,13 +89,13 @@ function FileUploader(props) {
               </svg>
 
               <Field
-              name="file"
-              // className="file hidden"
-              style={{display:"none"}}
-              type="file"
-              id="files"
-              value={initialValues.files}
-              multiple
+                name="file"
+                // className="file hidden"
+                style={{ display: "none" }}
+                type="file"
+                id="files"
+                value={initialValues.files}
+                multiple
               />
               <label className="text-[#767676] text-[16px]" style={{ color: "" }}>
                 Drag and drop some files...
