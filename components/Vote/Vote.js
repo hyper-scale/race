@@ -1,35 +1,18 @@
 import { useState } from "react";
-export default function Vote({ applicationId, initialCount }) {
-  const [voteCount, setVoteCount] = useState(initialCount);
-  const [isUservoted, setUservoted] = useState(false);
-
-  async function onVote(applicationId) {
-    if (!isUservoted) {
-      const res = await fetch(`/api/vote`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: applicationId,
-        }),
-      });
-      setVoteCount(initialCount + 1);
-      setUservoted(true);
-    }
-  }
+export default function Vote({ applicationId, voteCount, onVote }) {
   return (
-    <div className="flex flex-row cursor-pointer w-[fit-content]">
-      <div className="flex-1 py-2 px-4 border border-indigo-500 rounded-l-lg font-medium text-indigo-500">
-        {voteCount}
+    <div className="flex flex-row shadow-md rounded-lg">
+      <div className="flex border border-gray-300 bg-gray-100 rounded-l-lg py-2 px-4">
+        <label className="font-semibold font-bold text-indigo-500">{voteCount}</label>
       </div>
-      <div className="bg-indigo-500 rounded-r-lg flex content-center p-2">
-        <button className=" hover:bg-gray-900 rounded-lg cursor-pointer" onClick={() => onVote(applicationId)}>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke="white">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-          </svg>
-        </button>
-      </div>
+      <button
+        className="rounded-r-lg text-white bg-indigo-500 hover:bg-indigo-600 focus:ring-indigo-500 p-2"
+        onClick={() => onVote(applicationId)}
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 21V3M12 3L5 10M12 3L19 10" stroke="currentColor" strokeWidth="2"></path>
+        </svg>
+      </button>
     </div>
   );
 }

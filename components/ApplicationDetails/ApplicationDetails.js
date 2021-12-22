@@ -1,7 +1,9 @@
+import { useState } from "react";
 import Vote from "../Vote";
 import Voter from "../Voter";
 import Breadcrumbs from "../Breadcrumbs";
 import { useSession } from "next-auth/react";
+import Button from "../atoms/Button";
 
 const titles = {
   name: "Project name",
@@ -17,8 +19,42 @@ const titles = {
   flag: "Flag",
 }; // for future translations
 
+const FlagButton = ({ onClick = () => console.log("flag") }) => (
+  <Button className="flex flex-row items-center font-normal" color="gray" onClick={onClick}>
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"
+        />
+      </svg>
+    </div>
+    <div className="ml-2">Flag</div>
+  </Button>
+);
+
 const ApplicationDetails = ({ data }) => {
   const { data: session, status } = useSession();
+  const [voteCount, setVoteCount] = useState(data.voteCount);
+  const [isUservoted, setUservoted] = useState(false);
+
+  async function onVote(applicationId) {
+    if (!isUservoted) {
+      const res = await fetch(`/api/vote`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: applicationId,
+        }),
+      });
+      setVoteCount(voteCount + 1);
+      setUservoted(true);
+    }
+  }
 
   const breadcrumbs = [
     { url: "/", text: "Home" },
@@ -46,25 +82,7 @@ const ApplicationDetails = ({ data }) => {
           {data.projectName}
         </h1>
         <div className="flex justify-between mb-5">
-          <div className="flex flex-row items-center text-gray-600 border border-gray-300 bg-gray-100 hover:bg-gray-200 rounded-lg py-2 px-6  font-semibold hover:bg-gray-300 cursor-pointer">
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"
-                />
-              </svg>
-            </div>
-            <div className="ml-2">Flag</div>
-          </div>
+          <FlagButton />
           <div className="flex">
             <div className="h-[fit-content]">
               <div
@@ -86,19 +104,9 @@ const ApplicationDetails = ({ data }) => {
                   />
                 </svg>
               </div>
-              {/* this is just an if statement that checks if a user session exists */}
-              {session && <Vote initialCount={data.voteCount} applicationId={data._id} />}
             </div>
-            <div className="flex flex-row">
-              <div className="shadow-md flex border border-gray-300 bg-gray-100 rounded-l-lg">
-                <label className="font-semibold m-2 text-redrose font-bold text-indigo-500">{data.voteCount}</label>
-              </div>
-              <button className="rounded-r-lg shadow-md rounded-r-lg   text-white bg-indigo-500 hover:bg-indigo-600 focus:ring-indigo-500 p-2  cursor-pointer">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 21V3M12 3L5 10M12 3L19 10" stroke="currentColor" strokeWidth="2"></path>
-                </svg>
-              </button>
-            </div>
+            {/* this is just an if statement that checks if a user session exists */}
+            {session && <Vote voteCount={voteCount} onVote={onVote} applicationId={data._id} />}
           </div>
         </div>
         <div className="flex flex-col md:flex-row">
@@ -152,28 +160,8 @@ const ApplicationDetails = ({ data }) => {
         </div>
 
         <div className="mb-5">
-          {/* this is just an if statement that checks if a user session exists */}
-          {session && <Vote voteCount={data.voteCount} applicationId={data._id} />}
           <div className="flex justify-between mb-5">
-            <div className="flex flex-row items-center text-gray-600 border border-gray-300 bg-gray-100 hover:bg-gray-200 rounded-lg py-2 px-6  font-semibold hover:bg-gray-300 cursor-pointer">
-              <div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"
-                  />
-                </svg>
-              </div>
-              <div className="ml-2">Flag</div>
-            </div>
+            <FlagButton />
             <div className="flex">
               <div className="h-[fit-content]">
                 <div
@@ -195,19 +183,9 @@ const ApplicationDetails = ({ data }) => {
                     />
                   </svg>
                 </div>
-                {/* this is just an if statement that checks if a user session exists */}
-                {session && <Vote initialCount={data.voteCount} applicationId={data._id} />}
               </div>
-              <div className="flex flex-row">
-                <div className="shadow-md flex border border-gray-300 bg-gray-100 rounded-l-lg">
-                  <label className="font-semibold m-2 text-redrose font-bold text-indigo-500">{data.voteCount}</label>
-                </div>
-                <button className="rounded-r-lg shadow-md rounded-r-lg   text-white bg-indigo-500 hover:bg-indigo-600 focus:ring-indigo-500 p-2  cursor-pointer">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 21V3M12 3L5 10M12 3L19 10" stroke="currentColor" strokeWidth="2"></path>
-                  </svg>
-                </button>
-              </div>
+              {/* this is just an if statement that checks if a user session exists */}
+              {session && <Vote voteCount={voteCount} onVote={onVote} applicationId={data._id} />}
             </div>
           </div>
         </div>
