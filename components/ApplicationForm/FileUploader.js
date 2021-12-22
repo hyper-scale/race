@@ -1,24 +1,9 @@
 import { Field, useFormikContext } from "formik";
+import { format } from "prettier";
 import  React  from "react";
 import { ListGroup, ListGroupItem, Row, Button } from "reactstrap";
 
 
-// async function upload(file) {
-//   await fetch({
-//     url: '/api/uploads',
-//     body: file,
-//     method: 'POST'
-//   })
-//   .then(success => {
-//     console.log('OK NICE')
-//   })
-//   .catch(error => {
-//     console.log('NOPE', error)
-//   })
-//   .finally(() => {
-//     console.log('IN FINALLY')
-//   })
-// }
 
 function FileUploader(props) {
   const { label, name } = props;
@@ -35,9 +20,9 @@ function FileUploader(props) {
     const Dropzone = (await import("dropzone")).default;
 
     var dz = new Dropzone(document.getElementById("dropzone-multiple"), {
-      url: "/",
+      url: '/',
       addRemoveLinks: false,
-      method: "put",
+      method: "post",
       chunking: true,
       forceChunking: true,
       maxFiles: 2,
@@ -57,41 +42,25 @@ function FileUploader(props) {
       // validate file
 
       // upload file
-      console.log('in here')
-      fetch({
-        url: '/api/uploads',
-        body: file,
-        method: 'POST'
-      })
-      .then(success => {
-        console.log('OK NICE')
-      })
-      .catch(error => {
-        console.log('NOPE', error)
-      })
-      .finally(() => {
-        console.log('IN FINALLY')
-      })
 
+      var formdata = new FormData();
+      console.log(file.name, file)
+      formdata.append("file", file)
 
-      // keep track of added files
-      // let reader = new FileReader()
-      // if (file) {
-      //   reader.readAsDataURL(file)
-      //   console.log(reader.result)
-      // }
-      // myFiles.push(file)
-      // setFilesState(myFiles)
-      // setFieldValue("files", Array.from(myFiles));
-      // console.log(file)
+      var requestOptions = {
+        method: 'POST',
+        body: formdata,
+        redirect: 'follow',
+      };
+
+      fetch(`api/uploads`, requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
     })
 
-    dz.on("addedfile", function (file) {
+    dz.on("removedfile", (file) => {
       // ...
-    });
-
-    dz.on("removedfile", function (file) {
-      // remove file from arr
     });
 
     document.getElementsByClassName("dz-preview-multiple")[0].innerHTML = "";
@@ -124,23 +93,12 @@ function FileUploader(props) {
               </svg>
 
               <Field
-              name={name}
+              name="file"
               // className="file hidden"
               style={{display:"none"}}
               type="file"
               id="files"
               value={initialValues.files}
-              onChange={(event) => {
-
-                // console.log(event.target)
-                // setFieldValue("files", Array.from(event.currentTarget.files[0]));
-                // const files = event.target.files[0];
-                // let myFiles = Array.from(files);
-                // console.log(myFiles)
-                // setFilesState(myFiles)
-                // formik.setFieldVr
-                // alue("files", myFiles);
-              }}
               multiple
               />
               <label className="text-[#767676] text-[16px]" style={{ color: "" }}>

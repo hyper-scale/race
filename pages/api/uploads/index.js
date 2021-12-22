@@ -26,8 +26,6 @@ const storage = getStorage(global.firebaseApp);
 // Add file to Storage and return the file path
 const uploadFile = async (req, res) => {
   // Grab the file
-  console.log("we're herefvdlmflkvmdklfmvkldf")
-  console.log(req)
   const timestamp = Date.now();
   const fileName = `applications-uploads/${timestamp}_${req.file.originalname}`;
   const bucket = storage.bucket();

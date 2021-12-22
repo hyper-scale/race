@@ -12,17 +12,17 @@ export default function Apply({}) {
   );
 }
 
-// export async function getServerSideProps(context) {
-//   const userSession = await getSession(context);
-//   if (!userSession) {
-//     return {
-//       redirect: {
-//         destination: "/",
-//         permanent: false,
-//       },
-//     };
-//   }
-//   return {
-//     props: { userSession },
-//   };
-// }
+export async function getServerSideProps(context) {
+  const userSession = await getSession(context);
+  if (!userSession) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: { userSession },
+  };
+}
