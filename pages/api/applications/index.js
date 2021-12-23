@@ -18,6 +18,7 @@ export default async function handler(req, res) {
         evidenceOfExceptionalAbility: body.evidenceOfExceptionalAbility,
         founderBackground: body.founderBackground,
         helpfulLinks: JSON.stringify(body.helpfulLinks),
+        helpfulUploads: body.helpfulUploads,
         productPitch: body.productPitch,
         projectName: body.projectName,
         projectTweet: body.projectTweet,

@@ -1,17 +1,27 @@
 import { Field, useFormikContext } from "formik";
-import { format } from "prettier";
 import React from "react";
 import { ListGroup, ListGroupItem, Row, Button } from "reactstrap";
+
+async function uploadFile(file) {
+  var formdata = new FormData();
+  formdata.append("file", file);
+
+  var requestOptions = {
+    method: "POST",
+    body: formdata,
+  };
+  const response = await fetch(`api/uploads`, requestOptions)
+  return response.json(); // parses JSON response into native JavaScript objects
+}
 
 function FileUploader(props) {
   const { label, name } = props;
 
-  const { initialValues, setFieldValue } = useFormikContext();
+  const { values } = useFormikContext();
 
   // const [filesState, setFilesState] = useState(null);
 
   React.useEffect(async () => {
-    var myFiles = [];
 
     // we make a dynamic import for the Dropzone, as this component is not made to work on SSR
     const Dropzone = (await import("dropzone")).default;
@@ -35,28 +45,25 @@ function FileUploader(props) {
     dz.autoDiscover = false;
 
     dz.on("addedfile", (file) => {
-      // validate file
+      // TODO: file validation
 
-      // upload file
-
-      var formdata = new FormData();
-      console.log(file.name, file);
-      formdata.append("file", file);
-
-      var requestOptions = {
-        method: "POST",
-        body: formdata,
-        redirect: "follow",
-      };
-
-      fetch(`api/uploads`, requestOptions)
-        .then((response) => response.text())
-        .then((result) => console.log(result))
+      uploadFile(file)
+        .then((response) => {
+          const url = response.url
+          if (url) {
+            values.helpfulUploads.push({
+              url: url,
+              filename: file.name,
+              size: file.size,
+            })
+          }
+        })
         .catch((error) => console.log("error", error));
     });
 
-    dz.on("removedfile", (file) => {
-      // ...
+    dz.on("removedfile", (removedFile) => {
+      // TODO: improve flow, do we really want to depend on file name?
+      values.helpfulUploads = values.helpfulUploads.filter(x => x.filename !== removedFile.name);
     });
 
     document.getElementsByClassName("dz-preview-multiple")[0].innerHTML = "";
@@ -88,15 +95,16 @@ function FileUploader(props) {
                 />
               </svg>
 
-              <Field
-                name="file"
+              {/* <Field
+                // name="helpfulUploads"
+                // key="helpfulUploads"
                 // className="file hidden"
                 style={{ display: "none" }}
                 type="file"
-                id="files"
-                value={initialValues.files}
+                // id="helpfulUploads"
+                // value={initialValues.helpfulUploads}
                 multiple
-              />
+              /> */}
               <label className="text-[#767676] text-[16px]" style={{ color: "" }}>
                 Drag and drop some files...
               </label>
