@@ -96,7 +96,7 @@ const ApplicationForm = ({}) => {
     founderBackground: "",
     founderAbility: "",
     extraInfo: "",
-    links: [""],
+    links: [],
     referral: "",
     helpfulUploads: [],
   };
@@ -112,7 +112,7 @@ const ApplicationForm = ({}) => {
         emailAddress: values.email,
         evidenceOfExceptionalAbility: values.founderAbility,
         founderBackground: values.founderBackground,
-        helpfulLinks: values.links,
+        helpfulLinks: values.links.filter((link) => link),
         productPitch: values.pitchProject,
         projectName: values.projectName,
         projectTweet: values.pitchTweet,
@@ -173,6 +173,7 @@ const ApplicationForm = ({}) => {
                             name={element.name}
                             placeholder={element.placeholder}
                             height={element.height}
+                            values={initialValues}
                           />
                         </div>
                       ))

@@ -2,11 +2,14 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const UploadSchema = new Schema({
-  url: { type: String, required: true },
-  filename: { type: String, required: true },
-  size: { type: Number, required: false },
-});
+const UploadSchema = new Schema(
+  {
+    url: { type: String, required: true },
+    filename: { type: String, required: true },
+    size: { type: Number, required: false },
+  },
+  { _id: false }
+);
 
 const ApplicationSchema = new Schema({
   id: { type: Schema.Types.ObjectId },
