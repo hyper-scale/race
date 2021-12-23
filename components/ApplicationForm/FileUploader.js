@@ -10,7 +10,7 @@ async function uploadFile(file) {
     method: "POST",
     body: formdata,
   };
-  const response = await fetch(`api/uploads`, requestOptions)
+  const response = await fetch(`api/uploads`, requestOptions);
   return response.json(); // parses JSON response into native JavaScript objects
 }
 
@@ -22,7 +22,6 @@ function FileUploader(props) {
   // const [filesState, setFilesState] = useState(null);
 
   React.useEffect(async () => {
-
     // we make a dynamic import for the Dropzone, as this component is not made to work on SSR
     const Dropzone = (await import("dropzone")).default;
 
@@ -49,13 +48,13 @@ function FileUploader(props) {
 
       uploadFile(file)
         .then((response) => {
-          const url = response.url
+          const url = response.url;
           if (url) {
             values.helpfulUploads.push({
               url: url,
               filename: file.name,
               size: file.size,
-            })
+            });
           }
         })
         .catch((error) => console.log("error", error));
@@ -63,7 +62,7 @@ function FileUploader(props) {
 
     dz.on("removedfile", (removedFile) => {
       // TODO: improve flow, do we really want to depend on file name?
-      values.helpfulUploads = values.helpfulUploads.filter(x => x.filename !== removedFile.name);
+      values.helpfulUploads = values.helpfulUploads.filter((x) => x.filename !== removedFile.name);
     });
 
     document.getElementsByClassName("dz-preview-multiple")[0].innerHTML = "";
