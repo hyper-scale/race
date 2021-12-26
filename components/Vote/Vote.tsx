@@ -17,32 +17,27 @@ const Vote: React.FunctionComponent<VoteProps> = ({
   setVoteCount,
 }: VoteProps) => {
   const [isLoading, setLoading] = React.useState<boolean>(false);
-  const [isUserVoted, setUservoted] = React.useState<boolean>(false);
   const onVote = useCallback(async () => {
     setLoading(true);
-    if (!isUserVoted) {
-      try {
-        const res = await fetch(`/api/vote`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: applicationId,
-          }),
-        });
+    try {
+      const res = await fetch(`/api/vote`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: applicationId,
+        }),
+      });
 
-        if (res.ok) {
-          setUservoted(true);
-          setVoteCount(voteCount + 1);
-        }
-      } catch (error) {
-        console.error(error);
+      if (res.ok) {
+        setVoteCount(voteCount + 1);
       }
+    } catch (error) {
+      console.error(error);
     }
     setLoading(false);
-  }, [applicationId, voteCount, setLoading, setVoteCount, isUserVoted]);
-
+  }, [applicationId, voteCount, setLoading, setVoteCount]);
   const ArrowButton = () => (
     <button
       disabled={!isUserAuthenticated || isLoading}
@@ -107,3 +102,4 @@ const Vote: React.FunctionComponent<VoteProps> = ({
     </div>
   );
 };
+export default Vote;
