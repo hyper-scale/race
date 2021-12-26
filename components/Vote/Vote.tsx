@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useCallback } from "react";
 import cx from "classnames";
 import React from "react";
-type voteProps = {
+type VoteProps = {
   applicationId: Number;
   voteCount: number;
   isUserAuthenticated: Boolean;
@@ -9,7 +9,13 @@ type voteProps = {
   setVoteCount: Dispatch<SetStateAction<number>>;
 };
 // TODO: When transitioning to typescript, variant can be either 'vibrant' or 'simple'
-export default function Vote({ applicationId, voteCount, isUserAuthenticated, variant, setVoteCount }: voteProps) {
+const Vote: React.FunctionComponent<VoteProps> = ({
+  applicationId,
+  voteCount,
+  isUserAuthenticated,
+  variant,
+  setVoteCount,
+}: VoteProps) => {
   const [isLoading, setLoading] = React.useState<boolean>(false);
   const [isUserVoted, setUservoted] = React.useState<boolean>(false);
   const onVote = useCallback(async () => {
@@ -100,4 +106,4 @@ export default function Vote({ applicationId, voteCount, isUserAuthenticated, va
       </div>
     </div>
   );
-}
+};
