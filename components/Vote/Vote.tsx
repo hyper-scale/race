@@ -1,10 +1,17 @@
-import { useCallback, useState } from "react";
+import { Dispatch, SetStateAction, useCallback } from "react";
 import cx from "classnames";
-
+import React from "react";
+type voteProps = {
+  applicationId: Number;
+  voteCount: number;
+  isUserAuthenticated: Boolean;
+  variant: String;
+  setVoteCount: Dispatch<SetStateAction<number>>;
+};
 // TODO: When transitioning to typescript, variant can be either 'vibrant' or 'simple'
-export default function Vote({ applicationId, voteCount, isUserAuthenticated, variant, setVoteCount }) {
-  const [isLoading, setLoading] = useState(false);
-  const [isUserVoted, setUservoted] = useState(false);
+export default function Vote({ applicationId, voteCount, isUserAuthenticated, variant, setVoteCount }: voteProps) {
+  const [isLoading, setLoading] = React.useState<boolean>(false);
+  const [isUserVoted, setUservoted] = React.useState<boolean>(false);
   const onVote = useCallback(async () => {
     setLoading(true);
     if (!isUserVoted) {
