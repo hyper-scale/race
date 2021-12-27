@@ -120,6 +120,7 @@ export async function getApplications(options = {}) {
         lastRank = lastRank + 1;
       }
       application.rank = lastRank;
+      application._id = application._id.toString();
     });
   }
   return aggregate ?? [];

@@ -67,7 +67,7 @@ export default function DaoRace({ order, projects }) {
             Most recent
           </button>
         </div>
-        <Leaderboard data={projects} />
+        <Leaderboard data={projects} key={order} />
 
         {/* <Spinner /> */}
       </Layout>
