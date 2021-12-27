@@ -40,7 +40,6 @@ export function formatAirtableRecords(records) {
       "Provide some background on each founder": founderBackground,
       "Please state evidence of exceptional ability for each founder": evidenceOfExceptionalAbility,
       "Additional Details": additionalDetails,
-      "Helpful links": helpfulLinks,
       Referral: referral,
     } = record;
 
@@ -55,6 +54,11 @@ export function formatAirtableRecords(records) {
           size,
         };
       });
+    }
+    const helpfulLinksCell = record["Helpful links"];
+    let helpfulLinks = [];
+    if (helpfulLinksCell) {
+      helpfulLinks = helpfulLinksCell.split(",").map((item) => item.trim());
     }
     return {
       emailAddress,
