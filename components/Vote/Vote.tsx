@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useCallback, useContext } from "react";
 import cx from "classnames";
 import React from "react";
+import voteContext from "./voteContext";
 type VoteProps = {
   applicationId: Number;
   voteCount: number;
@@ -17,13 +18,10 @@ const Vote: React.FunctionComponent<VoteProps> = ({
   setVoteCount,
 }: VoteProps) => {
   const [isLoading, setLoading] = React.useState<boolean>(false);
-  const  hasUserVoted = React.createContext({
-    voted:false,
-    toggleUserVoted:()=>{}
-  });
+  const vote = React.useContext(voteContext);
   const onVote = useCallback(async () => {
     setLoading(true);
-    if(!hasUserVoted){
+    if (!vote.hasUserVoted) {
       try {
         const res = await fetch(`/api/vote`, {
           method: "POST",
@@ -34,22 +32,22 @@ const Vote: React.FunctionComponent<VoteProps> = ({
             id: applicationId,
           }),
         });
-  
+
         if (res.ok) {
+          vote.hasUserVoted = true;
           setVoteCount(voteCount + 1);
         }
       } catch (error) {
         console.error(error);
       }
     }
-    
     setLoading(false);
-  }, [applicationId, voteCount, setLoading, setVoteCount,hasUserVoted]);
+  }, [applicationId, voteCount, setLoading, setVoteCount, vote]);
   const ArrowButton = () => (
     <button
-      disabled={!isUserAuthenticated || isLoading}
+      disabled={!isUserAuthenticated || isLoading || vote.hasUserVoted}
       className={cx("w-full h-full py-2 px-3 cursor-pointer", {
-        "cursor-not-allowed": !isUserAuthenticated,
+        "cursor-not-allowed": !isUserAuthenticated || vote.hasUserVoted,
       })}
       onClick={onVote}
     >
