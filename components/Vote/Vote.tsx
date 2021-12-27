@@ -1,10 +1,22 @@
-import { useCallback, useState } from "react";
+import { Dispatch, SetStateAction, useCallback } from "react";
 import cx from "classnames";
-
+import React from "react";
+type VoteProps = {
+  applicationId: Number;
+  voteCount: number;
+  isUserAuthenticated: Boolean;
+  variant: String;
+  setVoteCount: Dispatch<SetStateAction<number>>;
+};
 // TODO: When transitioning to typescript, variant can be either 'vibrant' or 'simple'
-export default function Vote({ applicationId, voteCount, isUserAuthenticated, variant, setVoteCount }) {
-  const [isLoading, setLoading] = useState(false);
-
+const Vote: React.FunctionComponent<VoteProps> = ({
+  applicationId,
+  voteCount,
+  isUserAuthenticated,
+  variant,
+  setVoteCount,
+}: VoteProps) => {
+  const [isLoading, setLoading] = React.useState<boolean>(false);
   const onVote = useCallback(async () => {
     setLoading(true);
     try {
@@ -26,7 +38,6 @@ export default function Vote({ applicationId, voteCount, isUserAuthenticated, va
     }
     setLoading(false);
   }, [applicationId, voteCount, setLoading, setVoteCount]);
-
   const ArrowButton = () => (
     <button
       disabled={!isUserAuthenticated || isLoading}
@@ -90,4 +101,5 @@ export default function Vote({ applicationId, voteCount, isUserAuthenticated, va
       </div>
     </div>
   );
-}
+};
+export default Vote;
