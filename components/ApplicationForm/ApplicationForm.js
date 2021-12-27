@@ -85,6 +85,7 @@ const ApplicationForm = ({}) => {
     founderBackground: Yup.string().min(1, TOO_SHORT).max(1000, "Too Long!").required("Required"),
     founderAbility: Yup.string().min(1, TOO_SHORT).max(1000, TOO_LONG).required("Required"),
     extraInfo: Yup.string().max(1000, TOO_LONG),
+    links: Yup.array().of(Yup.string().url("Must be a valid url (e.g. http://...)")),
     referral: Yup.string().max(100, TOO_LONG),
   });
 
@@ -134,6 +135,7 @@ const ApplicationForm = ({}) => {
       })
       .finally((response) => {
         actions.setSubmitting(false);
+        actions.resetForm();
         window.scrollTo(0, 0);
       });
   };
@@ -160,7 +162,7 @@ const ApplicationForm = ({}) => {
             )}
             <FormHeader />
             <Formik initialValues={initialValues} validationSchema={ApplicationSchema} onSubmit={onSubmit}>
-              {({}) => (
+              {({ values }) => (
                 <Form className="flex flex-col py-10 space-y-6">
                   <FieldArray>
                     {() =>
@@ -173,7 +175,7 @@ const ApplicationForm = ({}) => {
                             name={element.name}
                             placeholder={element.placeholder}
                             height={element.height}
-                            values={initialValues}
+                            values={values}
                           />
                         </div>
                       ))

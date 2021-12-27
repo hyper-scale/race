@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { MapIcon, LightningBoltIcon, UserGroupIcon } from "@heroicons/react/outline";
 import Footer from "../components/Footer";
 
-const airtableUrl = "https://airtable.com/shrLFCXD7BQXUg97K";
+const airtableUrl = "/join";
 
 const features = [
   {
@@ -198,7 +198,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (_context) =>
   const projects = await getApplications({ limit: numRows });
   return {
     props: {
-      projects,
+      projects: JSON.parse(JSON.stringify(projects)),
     },
   };
 };

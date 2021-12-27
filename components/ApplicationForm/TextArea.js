@@ -1,4 +1,9 @@
 import { Field, ErrorMessage } from "formik";
+import TextareaAutosize from "react-textarea-autosize";
+
+const TextAreaAutoResize = ({ field, form, ...props }) => {
+  return <TextareaAutosize {...field} {...props} />;
+};
 
 function TextArea(props) {
   const { label, name, height, ...rest } = props;
@@ -18,9 +23,9 @@ function TextArea(props) {
       </div>
       <Field
         className={`p-5 h-${height} rounded-lg border-2 border-[#D8D8D8]`}
-        as="textarea"
         id={name}
         name={name}
+        component={TextAreaAutoResize}
         {...rest}
       />
     </div>

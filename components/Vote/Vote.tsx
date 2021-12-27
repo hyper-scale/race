@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useCallback, useContext } from "react";
 import cx from "classnames";
 import React from "react";
 import voteContext from "./voteContext";
+      
 type VoteProps = {
   applicationId: Number;
   voteCount: number;
