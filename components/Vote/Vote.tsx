@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback } from "react";
+import { Dispatch, SetStateAction, useCallback, useContext } from "react";
 import cx from "classnames";
 import React from "react";
 type VoteProps = {
@@ -17,27 +17,34 @@ const Vote: React.FunctionComponent<VoteProps> = ({
   setVoteCount,
 }: VoteProps) => {
   const [isLoading, setLoading] = React.useState<boolean>(false);
+  const  hasUserVoted = React.createContext({
+    voted:false,
+    toggleUserVoted:()=>{}
+  });
   const onVote = useCallback(async () => {
     setLoading(true);
-    try {
-      const res = await fetch(`/api/vote`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: applicationId,
-        }),
-      });
-
-      if (res.ok) {
-        setVoteCount(voteCount + 1);
+    if(!hasUserVoted){
+      try {
+        const res = await fetch(`/api/vote`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: applicationId,
+          }),
+        });
+  
+        if (res.ok) {
+          setVoteCount(voteCount + 1);
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
     }
+    
     setLoading(false);
-  }, [applicationId, voteCount, setLoading, setVoteCount]);
+  }, [applicationId, voteCount, setLoading, setVoteCount,hasUserVoted]);
   const ArrowButton = () => (
     <button
       disabled={!isUserAuthenticated || isLoading}
