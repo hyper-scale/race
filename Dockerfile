@@ -17,4 +17,4 @@ ENV MONGODB_URI "mongodb://mongo:27017/race"
 
 RUN yarn install --frozen-lockfile
 RUN yarn build
-CMD yarn start
+CMD node --require ./server-preload.js ./node_modules/.bin/next start

@@ -1,6 +1,8 @@
 // @ts-check
 "use strict";
 
+import logger from "./utils/logger";
+
 /**
  * Set up datadog tracing. This should be called first, so Datadog can hook
  * all the other dependencies like `http`.
@@ -18,13 +20,6 @@ function setUpDatadogTracing() {
  * Set up logging. Monkey patches a bunch of stuff.
  */
 function setUpLogging() {
-  // pino is a simple JSON logger with Datadog integration.
-  // By default it logs to STDOUT.
-  const pino = require("pino");
-  const logger = pino({
-    // Your options here.
-  });
-
   function getLoggingFunction(/** @type {string} */ levelName) {
     const baseLogFn = (logger[levelName] || logger.info).bind(logger);
     return function patchedLog(/** @type {any[]} */ ...parts) {
@@ -95,22 +90,20 @@ function setUpLogging() {
 }
 
 function cleanObjectForSerialization(value) {
-  // Clean up or copy `value` so our logger or error reporting system
-  // can record it.
-  //
-  // Because our logger `pino` uses JSON.stringify, we need to do
-  // the following here:
-  //
-  // 1. Remove all cycles. JSON.stringify throws an error when you pass
-  //    a value with cyclical references.
-  //    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cyclic_object_value
-  // 2. Because JSON.stringify only serializes enumerable properties, we
-  //    need to copy interesting, but non-enumerable properties like
-  //    value.name and value.message for errors:
-  //    JSON.stringify(new Error('nothing serialized')) returns '{}'
-  //
-  // Implementing this correctly is beyond the scope of my example.
-  return value;
+  const klona = require("klona/json").klona;
+  const retval = klona(value);
+  const seen = new WeakSet();
+
+  function recusivelyRemoveCircularReferences(obj) {
+    seen.add(obj);
+    for (let [k, v] of Object.entries(obj)) {
+      if (typeof v !== "object") continue;
+      if (seen.has(v)) delete obj[k];
+      else recusivelyRemoveCircularReferences(v);
+    }
+  }
+  recusivelyRemoveCircularReferences(retval);
+  return retval;
 }
 
 setUpDatadogTracing();
