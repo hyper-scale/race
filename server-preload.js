@@ -3,6 +3,8 @@
 
 import logger from "./utils/logger";
 
+const SENSITIVE_KEYS = [/^geoip$/i, /^clientIp$/i];
+
 /**
  * Set up datadog tracing. This should be called first, so Datadog can hook
  * all the other dependencies like `http`.
@@ -89,6 +91,22 @@ function setUpLogging() {
   });
 }
 
+function isSensitive(key) {
+  if (!key) return false;
+
+  return SENSITIVE_KEYS.some((regex) => regex.test(key));
+}
+
+function redactSensitiveInformation(obj) {
+  const traverse = require("traverse");
+
+  traverse(obj).forEach(function redact() {
+    if (isSensitive(this.key)) {
+      this.update("xxxxxx");
+    }
+  });
+}
+
 function cleanObjectForSerialization(value) {
   const klona = require("klona/json").klona;
   const retval = klona(value);
@@ -103,6 +121,7 @@ function cleanObjectForSerialization(value) {
     }
   }
   recusivelyRemoveCircularReferences(retval);
+  redactSensitiveInformation(retval);
   return retval;
 }
 
