@@ -1,6 +1,8 @@
 import { Fragment } from "react";
-
-const Breadcrumbs: React.FunctionComponent = ({ list }: any) => {
+type props={
+  list:any
+}
+const Breadcrumbs: React.FunctionComponent<props> = ({ list }:props) => {
   return (
     <div className="w-full py-6">
       <ol className="list-reset flex text-grey-dark">
