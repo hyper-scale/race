@@ -7,7 +7,7 @@ function loginWithDiscord() {
   return signIn("discord");
 }
 
-const AuthenticationGate:React.FunctionComponent = ({ sessionStatus, children }:any) => {
+const AuthenticationGate: React.FunctionComponent = ({ sessionStatus, children }: any) => {
   const isAuthenticated = sessionStatus === "authenticated";
 
   return (

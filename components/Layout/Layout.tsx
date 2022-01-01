@@ -2,12 +2,12 @@ import Head from "next/head";
 import Header from "../Header/Header";
 import Footer from "../Footer";
 
-type props={
-  narrow:boolean,
-  title:string,
-  children:any,
-}
-const Layout:React.FunctionComponent<props>=({ narrow = true, title = "Hyperscale", children }:props)=> {
+type props = {
+  narrow: boolean;
+  title: string;
+  children: any;
+};
+const Layout: React.FunctionComponent<props> = ({ narrow = true, title = "Hyperscale", children }: props) => {
   const pageTitle = title !== "Hyperscale" ? `Hyperscale - ${title}` : title;
 
   var width = !narrow ? "" : "max-w-7xl";
@@ -44,5 +44,5 @@ const Layout:React.FunctionComponent<props>=({ narrow = true, title = "Hyperscal
       </div>
     </>
   );
-}
-export default Layout
+};
+export default Layout;
