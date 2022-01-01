@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 
-export default function Breadcrumbs({ list }) {
+ const Breadcrumbs: React.FunctionComponent = ({ list }:any)  => {
   return (
     <div className="w-full py-6">
       <ol className="list-reset flex text-grey-dark">
@@ -22,8 +22,8 @@ export default function Breadcrumbs({ list }) {
     </div>
   );
 }
-
-{
+export default Breadcrumbs
+{ 
   /* <svg
 xmlns="http://www.w3.org/2000/svg"
 className="h-6 w-6"

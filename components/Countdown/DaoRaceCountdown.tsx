@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect } from "react";
 
-function CountdownElem({ value, label }) {
+function CountdownElem({value, label}:any) {
   return (
     <div className="flex flex-col w-28 h-20 justify-center items-center shadow-md rounded-md">
       <span className="text-2xl font-bold">{value}</span>
@@ -9,9 +9,9 @@ function CountdownElem({ value, label }) {
   );
 }
 
-function Countdown({ until }) {
+function Countdown({ until }:any) {
   // Update the countdown every 1 second
-  const [timeLeft, setTimeLeft] = useState(until - new Date());
+  const [timeLeft, setTimeLeft] = React.useState<number>(until - new Date());
   useEffect(() => {
     const interval = setInterval(() => {
       setTimeLeft(until - new Date());
@@ -35,9 +35,9 @@ function Countdown({ until }) {
   );
 }
 
-function getNextDate(epoch, intervalDays, currentDate) {
+function getNextDate(epoch:Date, intervalDays:number, currentDate:Date) {
   // XXX: This loop is silly - should be refactored to use some kind of modulus of the epoch
-  const nextRace = new Date(epoch);
+  const nextRace:Date = new Date(epoch);
   nextRace.setDate(nextRace.getDate() + intervalDays);
   while (nextRace < currentDate) {
     nextRace.setDate(nextRace.getDate() + intervalDays);
@@ -46,11 +46,11 @@ function getNextDate(epoch, intervalDays, currentDate) {
 }
 
 function DaoRaceCountdown() {
-  const epoch = useMemo(() => new Date(process.env.NEXT_PUBLIC_DAO_RACE_EPOCH), []);
-  const intervalDays = useMemo(() => parseInt(process.env.NEXT_PUBLIC_DAO_RACE_INTERVAL_DAYS, 10), []);
+  const epoch:Date = React.useMemo(() => new Date(process.env.NEXT_PUBLIC_DAO_RACE_EPOCH!), []);
+  const intervalDays:number =  React.useMemo(() => parseInt(process.env.NEXT_PUBLIC_DAO_RACE_INTERVAL_DAYS!, 10), []);
 
   // Make sure rollovers work
-  const [nextRaceAt, setNextRaceAt] = useState(getNextDate(epoch, intervalDays, new Date()));
+  const [nextRaceAt, setNextRaceAt] =  React.useState<Date>(getNextDate(epoch, intervalDays, new Date()));
   useEffect(() => {
     // XXX: This is firing way more often than we need it to be - should just be on date rollovers
     const interval = setInterval(() => {

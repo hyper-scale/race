@@ -6,7 +6,8 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
 // A super simple expandable component.{JSON.stringify(data, null, 2)}
-const ExpandedComponent = ({ data }) => {
+
+const ExpandedComponent = ({ data }:any) => {
   const router = useRouter();
   const links = data?.helpfulLinks ?? [];
   return (
@@ -114,7 +115,11 @@ const placeholderDiv = (
   ></div>
 );
 
-const VotesRow = ({ isUserAuthenticated, row }) => {
+type votesRowProps={
+  isUserAuthenticated:boolean,
+  row:any,
+}
+const VotesRow = ({ isUserAuthenticated, row }:votesRowProps) => {
   const [voteCount, setVoteCount] = useState(row.voteCount);
 
   return (
@@ -127,8 +132,11 @@ const VotesRow = ({ isUserAuthenticated, row }) => {
     />
   );
 };
-
-const Leaderboard = ({ data, numRows }) => {
+type LeaderboardProps={
+  data:any, 
+  numRows:number,
+}
+const Leaderboard:React.FunctionComponent<LeaderboardProps> = ({ data, numRows}:LeaderboardProps) => {
   const { status: sessionStatus } = useSession();
   const isUserAuthenticated = sessionStatus === "authenticated";
 
