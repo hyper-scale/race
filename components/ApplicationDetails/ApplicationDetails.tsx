@@ -38,9 +38,9 @@ type Props = {
   data: any;
 };
 
-const ApplicationDetails:  React.FunctionComponent<Props> = ({ data }) => {
+const ApplicationDetails: React.FunctionComponent<Props> = ({ data }) => {
   const { status: sessionStatus } = useSession();
-  const isUserAuthenticated:Boolean = sessionStatus === "authenticated";
+  const isUserAuthenticated: Boolean = sessionStatus === "authenticated";
   const [voteCount, setVoteCount] = React.useState<number>(data.voteCount);
 
   const breadcrumbs = [

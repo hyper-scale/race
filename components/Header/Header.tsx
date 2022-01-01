@@ -6,7 +6,7 @@ import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Button from "../atoms/Button";
 
-const  Header: React.FunctionComponent=()=> {
+const Header: React.FunctionComponent = () => {
   const { data: _, status } = useSession();
 
   const discordBtnProps = {
@@ -109,5 +109,5 @@ const  Header: React.FunctionComponent=()=> {
       </Popover>
     </nav>
   );
-}
-export default Header
+};
+export default Header;
