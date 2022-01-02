@@ -1,12 +1,12 @@
 import { Fragment } from "react";
-type props={
-  list:any
-}
-const Breadcrumbs: React.FunctionComponent<props> = ({ list }:props) => {
+type props = {
+  list: any;
+};
+const Breadcrumbs: React.FunctionComponent<props> = ({ list }: props) => {
   return (
     <div className="w-full py-6">
       <ol className="list-reset flex text-grey-dark">
-        {list.map((item:any, i:any) => (
+        {list.map((item: any, i: any) => (
           <Fragment key={`breadcrumb-item-${i}`}>
             <li>
               {item.url ? <a href={item.url}>{item.text}</a> : <span className="font-semibold">{item.text}</span>}

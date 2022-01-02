@@ -128,7 +128,7 @@ const ApplicationDetails: React.FunctionComponent<Props> = ({ data }) => {
               <dd className="mb-5">
                 <ul className="link-list list-disc pl-5">
                   {data.helpfulLinks &&
-                    data.helpfulLinks.map((link:string, i:any) => (
+                    data.helpfulLinks.map((link: string, i: any) => (
                       <li key={`link-${i}`}>
                         <a href={link} target="_blank" rel="noreferrer">
                           {link}
@@ -141,7 +141,7 @@ const ApplicationDetails: React.FunctionComponent<Props> = ({ data }) => {
               <dd className="mb-5">
                 <ul className="link-list list-disc pl-5">
                   {data.helpfulUploads &&
-                    data.helpfulUploads.map((upload:any, i:any) => (
+                    data.helpfulUploads.map((upload: any, i: any) => (
                       <li key={`upload-${i}`}>
                         <a href={upload.url} target="_blank" rel="noreferrer">
                           {upload.filename}
@@ -195,7 +195,7 @@ const ApplicationDetails: React.FunctionComponent<Props> = ({ data }) => {
         <div className="my-5">
           <div className="uppercase font-bold mb-3">{titles.voteFor}</div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full lg:w-2/3">
-            {data.votes.map((voter:IVoter, i:any) => (
+            {data.votes.map((voter: IVoter, i: any) => (
               <Voter
                 voter={voter.voter}
                 key={i}

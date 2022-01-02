@@ -1,9 +1,9 @@
-export interface IVoter{
+export interface IVoter {
   voter: string;
   image: string;
-  power?:any;
+  power?: any;
 }
-const Voter: React.FunctionComponent<IVoter> = ({ voter, image }:IVoter ) => {
+const Voter: React.FunctionComponent<IVoter> = ({ voter, image }: IVoter) => {
   return (
     <div className="flex flex-row items-center w-[fit-content]">
       <div>

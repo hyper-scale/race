@@ -30,7 +30,7 @@ const ExpandedComponent = ({ data }: any) => {
         <div className="basis-1/3 mb-5 md:mb-2">
           {links && (
             <ul>
-              {links.map((link:any, i:any) => (
+              {links.map((link: any, i: any) => (
                 <li key={`link-${i}`}>
                   <a href={link.trim()} target="_blank" rel="noreferrer">
                     {link.trim()}
@@ -140,37 +140,37 @@ const Leaderboard: React.FunctionComponent<LeaderboardProps> = ({ data, numRows 
   const { status: sessionStatus } = useSession();
   const isUserAuthenticated = sessionStatus === "authenticated";
 
-  let rows:any = JSON.parse(JSON.stringify(data));
+  let rows: any = JSON.parse(JSON.stringify(data));
   if (numRows) {
     rows = rows.slice(0, numRows);
   }
 
-  const columns:any = [
+  const columns: any = [
     {
       id: "colRank",
       name: "Rank",
-      selector: (row:any) => row.rank,
+      selector: (row: any) => row.rank,
     },
     {
       id: "colLdVotes",
       name: "Votes",
-      selector: (row:any) => <VotesRow row={row} isUserAuthenticated={isUserAuthenticated} />,
+      selector: (row: any) => <VotesRow row={row} isUserAuthenticated={isUserAuthenticated} />,
     },
     {
       id: "colName",
       name: "Name",
-      selector: (row:any) => row.projectName ?? placeholderDiv,
+      selector: (row: any) => row.projectName ?? placeholderDiv,
     },
     {
       id: "colSdVotes",
       name: "Votes",
-      selector: (row:any) => <VotesRow row={row} isUserAuthenticated={isUserAuthenticated} />,
+      selector: (row: any) => <VotesRow row={row} isUserAuthenticated={isUserAuthenticated} />,
     },
     {
       id: "colSubmittedBy",
       name: "Submitted by",
       hide: "md",
-      selector: (row:any) => row.discordId ?? row.userName ?? placeholderDiv,
+      selector: (row: any) => row.discordId ?? row.userName ?? placeholderDiv,
     },
     // {
     //   name: "Date submitted",
