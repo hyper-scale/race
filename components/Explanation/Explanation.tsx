@@ -1,4 +1,4 @@
-const Explanation = () => {
+const Explanation: React.FunctionComponent = () => {
   return (
     <>
       <h1 className="text-4xl sm:text-5xl">

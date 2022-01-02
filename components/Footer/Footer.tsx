@@ -3,8 +3,7 @@ import Image from "next/image";
 // assets
 import Hyperscale from "../../public/hyperscale.svg";
 import Backslash from "../../public/backslash.svg";
-
-const Footer = () => {
+const Footer: React.FunctionComponent = () => {
   return (
     <div className="w-full bg-[#FBFBFF] flex justify-center px-4 py-6 md:py-10">
       <div className="w-screen max-w-7xl flex flex-wrap justify-center px-3">
