@@ -4,6 +4,7 @@ import Breadcrumbs from "../Breadcrumbs";
 import { useSession } from "next-auth/react";
 import Button from "../atoms/Button";
 import React from "react";
+import { IVoter } from "../Voter/Voter";
 
 const titles = {
   name: "Project name",
@@ -127,7 +128,7 @@ const ApplicationDetails: React.FunctionComponent<Props> = ({ data }) => {
               <dd className="mb-5">
                 <ul className="link-list list-disc pl-5">
                   {data.helpfulLinks &&
-                    data.helpfulLinks.map((link, i) => (
+                    data.helpfulLinks.map((link:string, i:any) => (
                       <li key={`link-${i}`}>
                         <a href={link} target="_blank" rel="noreferrer">
                           {link}
@@ -140,7 +141,7 @@ const ApplicationDetails: React.FunctionComponent<Props> = ({ data }) => {
               <dd className="mb-5">
                 <ul className="link-list list-disc pl-5">
                   {data.helpfulUploads &&
-                    data.helpfulUploads.map((upload, i) => (
+                    data.helpfulUploads.map((upload:any, i:any) => (
                       <li key={`upload-${i}`}>
                         <a href={upload.url} target="_blank" rel="noreferrer">
                           {upload.filename}
@@ -184,6 +185,7 @@ const ApplicationDetails: React.FunctionComponent<Props> = ({ data }) => {
                 setVoteCount={setVoteCount}
                 applicationId={data._id}
                 isUserAuthenticated={isUserAuthenticated}
+                variant="vibrant"
               />
             </div>
           </div>
@@ -193,11 +195,12 @@ const ApplicationDetails: React.FunctionComponent<Props> = ({ data }) => {
         <div className="my-5">
           <div className="uppercase font-bold mb-3">{titles.voteFor}</div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full lg:w-2/3">
-            {data.votes.map((voter, i) => (
+            {data.votes.map((voter:IVoter, i:any) => (
               <Voter
-                voter={voter.username}
+                voter={voter.voter}
                 key={i}
-                //power={voter.power} image={voter.image}
+                image={voter.image}
+                //power={voter.power}
               />
             ))}
           </div>
