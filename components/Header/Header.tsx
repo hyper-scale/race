@@ -11,7 +11,7 @@ const Header: React.FunctionComponent = () => {
 
   const discordBtnProps = {
     text: status === "authenticated" ? "Sign Out" : "Connect Discord",
-    onClick: status === "authenticated" ? () => signOut("discord") : () => signIn("discord"),
+    onClick: status === "authenticated" ? () => signOut() : () => signIn("discord"),
   };
 
   return (

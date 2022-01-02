@@ -9,12 +9,12 @@ function CountdownElem({ value, label }: any) {
   );
 }
 
-function Countdown({ until }: any) {
+function Countdown({ until }:any) {
   // Update the countdown every 1 second
-  const [timeLeft, setTimeLeft] = React.useState<number>(until - new Date());
+  const [timeLeft, setTimeLeft] = React.useState<number>(until - Number(new Date()));
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimeLeft(until - new Date());
+      setTimeLeft(until - Number(new Date()));
     }, 1000);
     return () => clearInterval(interval);
   }, [until]);
