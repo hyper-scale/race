@@ -13,16 +13,16 @@ const CountdownElem: React.FunctionComponent<Props> = ({ value, label }: Props) 
   );
 };
 type CountdownProps = {
-  until: number;
+  until: Date;
   paused: boolean;
 };
 const Countdown: React.FunctionComponent<CountdownProps> = ({ until, paused }: CountdownProps) => {
   // Update the countdown every 1 second
-  const [timeLeft, setTimeLeft] = React.useState<number>(until - Number(new Date()));
+  const [timeLeft, setTimeLeft] = React.useState<number>(Number(until) - Number(new Date()));
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimeLeft(until - Number(new Date()));
+      setTimeLeft((Number(until) - Number(new Date())));
     }, 1000);
     return () => clearInterval(interval);
   }, [until]);
