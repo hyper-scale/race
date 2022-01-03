@@ -7,13 +7,13 @@ import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Button from "../atoms/Button";
 
-const Header: React.FunctionComponent = () => {
+export default function Header() {
   const { data: _, status } = useSession();
   const router = useRouter();
 
   const discordBtnProps = {
     text: status === "authenticated" ? "Sign Out" : "Connect Discord",
-    onClick: status === "authenticated" ? () => signOut() : () => signIn("discord"),
+    onClick: status === "authenticated" ? () => signOut("discord") : () => signIn("discord"),
   };
 
   return (
@@ -139,5 +139,4 @@ const Header: React.FunctionComponent = () => {
       </Popover>
     </nav>
   );
-};
-export default Header;
+}
