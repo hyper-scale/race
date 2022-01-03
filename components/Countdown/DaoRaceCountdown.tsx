@@ -22,7 +22,7 @@ const Countdown: React.FunctionComponent<CountdownProps> = ({ until, paused }: C
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimeLeft((Number(until) - Number(new Date())));
+      setTimeLeft(Number(until) - Number(new Date()));
     }, 1000);
     return () => clearInterval(interval);
   }, [until]);
