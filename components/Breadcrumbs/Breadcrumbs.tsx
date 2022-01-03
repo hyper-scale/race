@@ -1,10 +1,17 @@
 import { Fragment } from "react";
+type Props = {
+  list: ListItem[];
+};
+type ListItem = {
+  url: string;
+  text: string;
+};
 
-export default function Breadcrumbs({ list }) {
+const Breadcrumbs: React.FunctionComponent<Props> = ({ list }: Props) => {
   return (
     <div className="w-full py-6">
       <ol className="list-reset flex text-grey-dark">
-        {list.map((item, i) => (
+        {list.map((item: any, i: any) => (
           <Fragment key={`breadcrumb-item-${i}`}>
             <li>
               {item.url ? <a href={item.url}>{item.text}</a> : <span className="font-semibold">{item.text}</span>}
@@ -21,8 +28,8 @@ export default function Breadcrumbs({ list }) {
       </ol>
     </div>
   );
-}
-
+};
+export default Breadcrumbs;
 {
   /* <svg
 xmlns="http://www.w3.org/2000/svg"

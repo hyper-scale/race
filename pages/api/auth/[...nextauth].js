@@ -55,7 +55,7 @@ export default NextAuth({
           Authorization: `Bearer ${account?.access_token}`,
         },
       });
-      Event.create({
+      await Event.create({
         type: "signIn",
         data: { user: user, providerAccountId: account.providerAccountId },
       });
