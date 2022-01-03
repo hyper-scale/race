@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Popover, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { useSession, signIn, signOut } from "next-auth/react";
@@ -8,6 +9,7 @@ import Button from "../atoms/Button";
 
 const Header: React.FunctionComponent = () => {
   const { data: _, status } = useSession();
+  const router = useRouter();
 
   const discordBtnProps = {
     text: status === "authenticated" ? "Sign Out" : "Connect Discord",
@@ -25,6 +27,15 @@ const Header: React.FunctionComponent = () => {
         </Link>
         {/* Desktop Navigation */}
         <div className="hidden md:flex md:items-center space-x-0 xl:space-x-2 text-redrose">
+          <a
+            href="#"
+            onClick={() => router.push({ pathname: "/dao-directory" })}
+            className="px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-opacity-30"
+            rel="external noreferrer"
+            target=""
+          >
+            DAO Directory
+          </a>
           <a
             href="https://twitter.com/HyperscaleFund"
             className="px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-opacity-30"
