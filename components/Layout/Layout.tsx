@@ -3,7 +3,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer";
 
 type props = {
-  narrow: boolean;
+  narrow?: boolean;
   title: string;
   children: any;
 };

@@ -9,9 +9,9 @@ function CountdownElem({ value, label }: any) {
   );
 }
 
-function Countdown({ until, paused }:any) {
+function Countdown({ until, paused }: any) {
   // Update the countdown every 1 second
-  const [timeLeft, setTimeLeft] = React.useState<number>(until -Number(new Date()));
+  const [timeLeft, setTimeLeft] = React.useState<number>(until - Number(new Date()));
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -58,8 +58,8 @@ function getNextDate(epoch: Date, intervalDays: number, currentDate: Date) {
 }
 
 function DaoRaceCountdown() {
-  const epoch: Date  = React.useMemo(() => new Date(process.env.NEXT_PUBLIC_DAO_RACE_EPOCH!), []);
-  const intervalDays : number = React.useMemo(() => parseInt(process.env.NEXT_PUBLIC_DAO_RACE_INTERVAL_DAYS!), []);
+  const epoch: Date = React.useMemo(() => new Date(process.env.NEXT_PUBLIC_DAO_RACE_EPOCH!), []);
+  const intervalDays: number = React.useMemo(() => parseInt(process.env.NEXT_PUBLIC_DAO_RACE_INTERVAL_DAYS!), []);
   // Make sure rollovers work
   const [nextRaceAt, setNextRaceAt] = React.useState<Date>(getNextDate(epoch, intervalDays, new Date()));
   useEffect(() => {
