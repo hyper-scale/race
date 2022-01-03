@@ -6,7 +6,8 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
 // A super simple expandable component.{JSON.stringify(data, null, 2)}
-const ExpandedComponent = ({ data }) => {
+
+const ExpandedComponent = ({ data }: any) => {
   const router = useRouter();
   const links = data?.helpfulLinks ?? [];
   return (
@@ -29,7 +30,7 @@ const ExpandedComponent = ({ data }) => {
         <div className="basis-1/3 mb-5 md:mb-2">
           {links && (
             <ul>
-              {links.map((link, i) => (
+              {links.map((link: any, i: any) => (
                 <li key={`link-${i}`}>
                   <a href={link.trim()} target="_blank" rel="noreferrer">
                     {link.trim()}
@@ -114,7 +115,11 @@ const placeholderDiv = (
   ></div>
 );
 
-const VotesRow = ({ isUserAuthenticated, row }) => {
+type votesRowProps = {
+  isUserAuthenticated: boolean;
+  row: any;
+};
+const VotesRow = ({ isUserAuthenticated, row }: votesRowProps) => {
   const [voteCount, setVoteCount] = useState(row.voteCount);
 
   return (
@@ -127,42 +132,45 @@ const VotesRow = ({ isUserAuthenticated, row }) => {
     />
   );
 };
-
-const Leaderboard = ({ data, numRows }) => {
+type LeaderboardProps = {
+  data: any;
+  numRows: number;
+};
+const Leaderboard: React.FunctionComponent<LeaderboardProps> = ({ data, numRows }: LeaderboardProps) => {
   const { status: sessionStatus } = useSession();
   const isUserAuthenticated = sessionStatus === "authenticated";
 
-  let rows = JSON.parse(JSON.stringify(data));
+  let rows: any = JSON.parse(JSON.stringify(data));
   if (numRows) {
     rows = rows.slice(0, numRows);
   }
 
-  const columns = [
+  const columns: any = [
     {
       id: "colRank",
       name: "Rank",
-      selector: (row) => row.rank,
+      selector: (row: any) => row.rank,
     },
     {
       id: "colLdVotes",
       name: "Votes",
-      selector: (row) => <VotesRow row={row} isUserAuthenticated={isUserAuthenticated} />,
+      selector: (row: any) => <VotesRow row={row} isUserAuthenticated={isUserAuthenticated} />,
     },
     {
       id: "colName",
       name: "Name",
-      selector: (row) => row.projectName ?? placeholderDiv,
+      selector: (row: any) => row.projectName ?? placeholderDiv,
     },
     {
       id: "colSdVotes",
       name: "Votes",
-      selector: (row) => <VotesRow row={row} isUserAuthenticated={isUserAuthenticated} />,
+      selector: (row: any) => <VotesRow row={row} isUserAuthenticated={isUserAuthenticated} />,
     },
     {
       id: "colSubmittedBy",
       name: "Submitted by",
       hide: "md",
-      selector: (row) => row.discordId ?? row.userName ?? placeholderDiv,
+      selector: (row: any) => row.discordId ?? row.userName ?? placeholderDiv,
     },
     // {
     //   name: "Date submitted",
