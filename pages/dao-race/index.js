@@ -44,7 +44,6 @@ export default function DaoRace({ order, projects }) {
           </div>
           <div className="flex-col basis-1/2 px-4 md:px-0 pt-5 md:pt-0 pb-10 md:pb-0 text-center md:text-left bg-white-grey md:bg-white  w-screen md:w-full">
             <DaoRaceCountdown />
-            <p className="text-right text-gray-500 text-sm mt-2 p-2">Until next funding round</p>
           </div>
         </div>
         <div className="basis-1/4 flex tab-filter mt-4 px-4 md:px-0">

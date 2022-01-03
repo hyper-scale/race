@@ -9,15 +9,24 @@ function CountdownElem({ value, label }: any) {
   );
 }
 
-function Countdown({ until }: any) {
+function Countdown({ until, paused }:any) {
   // Update the countdown every 1 second
-  const [timeLeft, setTimeLeft] = React.useState<number>(until - Number(new Date()));
+  const [timeLeft, setTimeLeft] = React.useState<number>(until -Number(new Date()));
+
   useEffect(() => {
     const interval = setInterval(() => {
       setTimeLeft(until - Number(new Date()));
     }, 1000);
     return () => clearInterval(interval);
   }, [until]);
+
+  if (paused) {
+    return (
+      <div className="flex-1 flex pb-12 h-10 flex-row justify-end space-x-10 md:flex-row p-5">
+        <h2 className="text-4xl font-extrabold text-gray-900">DAO Race Paused</h2>
+      </div>
+    );
+  }
 
   // Get component parts
   const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
@@ -26,11 +35,14 @@ function Countdown({ until }: any) {
   const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
   return (
-    <div className="flex-1 flex flex-row justify-end space-x-2">
-      <CountdownElem value={days} label={days === 1 ? "Day" : "Days"} />
-      <CountdownElem value={hours} label={hours === 1 ? "Hour" : "Hours"} />
-      <CountdownElem value={minutes} label={minutes === 1 ? "Minute" : "Minutes"} />
-      <CountdownElem value={seconds} label={seconds === 1 ? "Second" : "Seconds"} />
+    <div className="flex flex-col">
+      <div className="flex-1 flex flex-row justify-end space-x-2">
+        <CountdownElem value={days} label={days === 1 ? "Day" : "Days"} />
+        <CountdownElem value={hours} label={hours === 1 ? "Hour" : "Hours"} />
+        <CountdownElem value={minutes} label={minutes === 1 ? "Minute" : "Minutes"} />
+        <CountdownElem value={seconds} label={seconds === 1 ? "Second" : "Seconds"} />
+      </div>
+      <p className="text-right text-gray-500 text-sm mt-2 p-2">Until next funding round</p>
     </div>
   );
 }
@@ -46,9 +58,8 @@ function getNextDate(epoch: Date, intervalDays: number, currentDate: Date) {
 }
 
 function DaoRaceCountdown() {
-  const epoch: Date = React.useMemo(() => new Date(process.env.NEXT_PUBLIC_DAO_RACE_EPOCH!), []);
-  const intervalDays: number = React.useMemo(() => parseInt(process.env.NEXT_PUBLIC_DAO_RACE_INTERVAL_DAYS!, 10), []);
-
+  const epoch: Date  = React.useMemo(() => new Date(process.env.NEXT_PUBLIC_DAO_RACE_EPOCH!), []);
+  const intervalDays : number = React.useMemo(() => parseInt(process.env.NEXT_PUBLIC_DAO_RACE_INTERVAL_DAYS!), []);
   // Make sure rollovers work
   const [nextRaceAt, setNextRaceAt] = React.useState<Date>(getNextDate(epoch, intervalDays, new Date()));
   useEffect(() => {
@@ -63,7 +74,7 @@ function DaoRaceCountdown() {
     return () => clearInterval(interval);
   }, [epoch, intervalDays, nextRaceAt]);
 
-  return <Countdown until={nextRaceAt} />;
+  return <Countdown until={nextRaceAt} paused={nextRaceAt != null} />;
 }
 
 export default DaoRaceCountdown;
