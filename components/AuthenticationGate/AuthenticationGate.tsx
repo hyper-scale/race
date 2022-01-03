@@ -6,8 +6,11 @@ import Image from "next/image";
 function loginWithDiscord() {
   return signIn("discord");
 }
-
-const AuthenticationGate: React.FunctionComponent = ({ sessionStatus, children }: any) => {
+type Props = {
+  sessionStatus: string;
+  children: any;
+};
+const AuthenticationGate: React.FunctionComponent<Props> = ({ sessionStatus, children }: Props) => {
   const isAuthenticated = sessionStatus === "authenticated";
 
   return (

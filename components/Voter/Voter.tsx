@@ -11,7 +11,6 @@ const Voter: React.FunctionComponent<IVoter> = ({ voter, image, power }: IVoter)
       </div>
       <div className="bg-gray-200 text-sm rounded-full px-2 font-medium text-gray-400 w-[fit-content]">{power}</div>
       <div className="flex-1 px-4 font-semibold text-gray-600">@{voter}</div>
-      <div className="bg-gray-200 text-sm rounded-full px-2 font-medium text-gray-400 w-[fit-content]">{power}</div>
     </div>
   );
 };

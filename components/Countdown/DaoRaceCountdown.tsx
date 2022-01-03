@@ -1,15 +1,22 @@
 import React, { useEffect } from "react";
 
-function CountdownElem({ value, label }: any) {
+type Props = {
+  value: number;
+  label: string;
+};
+const CountdownElem: React.FunctionComponent<Props> = ({ value, label }: Props) => {
   return (
     <div className="flex flex-col w-28 h-20 justify-center items-center shadow-md rounded-md">
       <span className="text-2xl font-bold">{value}</span>
       <span className="text-xs text-gray-500">{label}</span>
     </div>
   );
-}
-
-function Countdown({ until, paused }: any) {
+};
+type CountdownProps = {
+  until: number;
+  paused: boolean;
+};
+const Countdown: React.FunctionComponent<CountdownProps> = ({ until, paused }: CountdownProps) => {
   // Update the countdown every 1 second
   const [timeLeft, setTimeLeft] = React.useState<number>(until - Number(new Date()));
 
@@ -29,10 +36,10 @@ function Countdown({ until, paused }: any) {
   }
 
   // Get component parts
-  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+  const days: number = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  const hours: number = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes: number = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds: number = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
   return (
     <div className="flex flex-col">
@@ -45,7 +52,7 @@ function Countdown({ until, paused }: any) {
       <p className="text-right text-gray-500 text-sm mt-2 p-2">Until next funding round</p>
     </div>
   );
-}
+};
 
 function getNextDate(epoch: Date, intervalDays: number, currentDate: Date) {
   // XXX: This loop is silly - should be refactored to use some kind of modulus of the epoch

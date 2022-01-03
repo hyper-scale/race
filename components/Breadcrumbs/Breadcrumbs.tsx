@@ -1,8 +1,13 @@
 import { Fragment } from "react";
-type props = {
-  list: any;
+type Props = {
+  list: ListItem[];
 };
-const Breadcrumbs: React.FunctionComponent<props> = ({ list }: props) => {
+type ListItem = {
+  url: string;
+  text: string;
+};
+
+const Breadcrumbs: React.FunctionComponent<Props> = ({ list }: Props) => {
   return (
     <div className="w-full py-6">
       <ol className="list-reset flex text-grey-dark">
