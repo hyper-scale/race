@@ -7,13 +7,13 @@ import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Button from "../atoms/Button";
 
-export default function Header() {
+const Header: React.FunctionComponent = () => {
   const { data: _, status } = useSession();
   const router = useRouter();
 
   const discordBtnProps = {
     text: status === "authenticated" ? "Sign Out" : "Connect Discord",
-    onClick: status === "authenticated" ? () => signOut("discord") : () => signIn("discord"),
+    onClick: status === "authenticated" ? () => signOut() : () => signIn("discord"),
   };
 
   return (
@@ -71,18 +71,10 @@ export default function Header() {
           leave="duration-100 ease-in"
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
-          
         >
-          <Popover.Panel
-            focus
-            className="fixed inset-y-0 inset-x-0  transform origin-top-right"
-          > 
-            {/* absolute y-0 x-0 z-10 top-0 bottom-0 inset-x-0 p-0 transition transform origin-top-right md:hidden */}
+          <Popover.Panel focus className="fixed inset-y-0 inset-x-0  transform origin-top-right">
             <div className="rounded-lg height-shadow-md bg-white ring-1 ring-black ring-opacity-5 ">
-
-            
               <div className="px-5 pt-4 flex items-center justify-space-evenly">
-               
                 <div className="-mr-2">
                   <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                     <span className="sr-only">Close main menu</span>
@@ -91,7 +83,7 @@ export default function Header() {
                 </div>
               </div>
               <div className=" px-40 pt-1 pb-3 space-y-10">
-              <a
+                <a
                   href="https://www.hyperscalefund.com/"
                   className="flex items-center justify-center block px-3.5 py-2 rounded-md text-base font-medium text-black hover:text-gray-900 hover:bg-gray-50"
                   rel="external noreferrer"
@@ -115,28 +107,25 @@ export default function Header() {
                 >
                   Discord
                 </a>
-                
-                  
               </div>
               <div className="relative flex items-center justify-center px-36 pt-8 pb-10 space-y-1">
-              <Button color="primary" onClick={discordBtnProps.onClick}>
-                {discordBtnProps.text}
-              </Button>
+                <Button color="primary" onClick={discordBtnProps.onClick}>
+                  {discordBtnProps.text}
+                </Button>
               </div>
               <Link href="/">
-                    <a className="flex items-center justify-center gap-x-4 px-40 pt--40 pb-3 space-y-4">
-                      <Image src="/logo.svg" width="60" height="60" alt="" />
-                      </a>
-                      </Link>
-                      <a className="flex items-center justify-center gap-x-4 px-24 pt--40  pb-3 space-y-1">
-                      <Image src="/hyperscale.svg" width="160" height="80" alt="" />
-                    </a>
-                  
+                <a className="flex items-center justify-center gap-x-4 px-40 pt--40 pb-3 space-y-4">
+                  <Image src="/logo.svg" width="60" height="60" alt="" />
+                </a>
+              </Link>
+              <a className="flex items-center justify-center gap-x-4 px-24 pt--40  pb-3 space-y-1">
+                <Image src="/hyperscale.svg" width="160" height="80" alt="" />
+              </a>
             </div>
-           
           </Popover.Panel>
         </Transition>
       </Popover>
     </nav>
   );
 }
+export default Header;
