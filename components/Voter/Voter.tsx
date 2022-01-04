@@ -2,6 +2,7 @@ export interface IVoter {
   voter: string;
   image: string;
   power?: any;
+  username?: string;
 }
 const Voter: React.FunctionComponent<IVoter> = ({ voter, image, power }: IVoter) => {
   return (

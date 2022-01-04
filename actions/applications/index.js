@@ -181,7 +181,7 @@ export async function updateVote(applicationId, voterEmail, upsert) {
     return;
   }
 
-  queryWithSession((dbSession) =>
+  await queryWithSession((dbSession) =>
     Event.create(
       { type: "vote", data: { applicationId: applicationId, user: user }, userId: user._id },
       { session: dbSession }
