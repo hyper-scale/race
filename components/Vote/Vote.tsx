@@ -29,11 +29,11 @@ const Vote: React.FunctionComponent<VoteProps> = ({
           id: applicationId,
         }),
       });
-      if (res.status==204) {
-        setVoteCount(voteCount - 1 );
+      if (res.status == 204) {
+        setVoteCount(voteCount - 1);
       }
-      if (res.status==200) {
-        setVoteCount(voteCount + 1 );
+      if (res.status == 200) {
+        setVoteCount(voteCount + 1);
       }
     } catch (error) {
       console.error(error);

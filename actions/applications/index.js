@@ -135,7 +135,7 @@ export async function getSelectedApplications(applicationId, email) {
   });
 }
 
-export async function updateVote(applicationId, voterEmail, upsert) {
+export async function updateVote(applicationId, voterEmail) {
   var { result: user, error: user_err } = await queryWithSession((session) =>
     User.findOne({ email: voterEmail }, null, { session })
   );
@@ -144,33 +144,31 @@ export async function updateVote(applicationId, voterEmail, upsert) {
     console.error(`Failed to find user ${voterEmail}`, user_err);
     return;
   }
-  const addVote = { $addToSet: { votes: user._id } }
-  const removeVote={ $pull: { votes: user._id } }
+  const addVote = { $addToSet: { votes: user._id } };
+  const removeVote = { $pull: { votes: user._id } };
   let { result: app, error: app_err } = await queryWithSession((session) =>
     Application.findOne(
       // Find application by Id and uservote
-      { _id: applicationId ,votes: user._id},
+      { _id: applicationId, votes: user._id }
     )
   );
-  if(app){
-    console.log(user._id)
+  if (app) {
     await queryWithSession((session) =>
-    Application.findOneAndUpdate(
-      // Find application by Id
-      { _id: applicationId },
-      removeVote
-    )
-  );
-  return "voteRemoved";
+      Application.findOneAndUpdate(
+        // Find application by Id
+        { _id: applicationId },
+        removeVote
+      )
+    );
+    return "voteRemoved";
   }
-  if(!app && app_err==null){
-    console.log(user._id)
+  if (!app && app_err == null) {
     await queryWithSession((session) =>
-    Application.findOneAndUpdate(
-      // Find application by Id
-      { _id: applicationId },
-      addVote
-    )
+      Application.findOneAndUpdate(
+        // Find application by Id
+        { _id: applicationId },
+        addVote
+      )
     );
     return "voted";
   }

@@ -16,9 +16,9 @@ export default async function vote(req, res) {
       // Bad Request
       res.status(400);
     } else {
-      const result = await updateVote(applicationId, voterEmail, true);
-      if(result=='voteRemoved'){
-        res.status(204)
+      const result = await updateVote(applicationId, voterEmail);
+      if (result == "voteRemoved") {
+        res.status(204);
       }
       if (!result) {
         res.status(501);
