@@ -144,14 +144,37 @@ export async function updateVote(applicationId, voterEmail, upsert) {
     console.error(`Failed to find user ${voterEmail}`, user_err);
     return;
   }
-  const operation = upsert ? { $addToSet: { votes: user._id } } : { $pull: { votes: user._id } };
+  const addVote = { $addToSet: { votes: user._id } }
+  const removeVote={ $pull: { votes: user._id } }
   let { result: app, error: app_err } = await queryWithSession((session) =>
+    Application.findOne(
+      // Find application by Id and uservote
+      { _id: applicationId ,votes: user._id},
+    )
+  );
+  if(app){
+    console.log(user._id)
+    await queryWithSession((session) =>
     Application.findOneAndUpdate(
       // Find application by Id
       { _id: applicationId },
-      operation
+      removeVote
     )
   );
+  return "voteRemoved";
+  }
+  if(!app && app_err==null){
+    console.log(user._id)
+    await queryWithSession((session) =>
+    Application.findOneAndUpdate(
+      // Find application by Id
+      { _id: applicationId },
+      addVote
+    )
+    );
+    return "voted";
+  }
+
   if (app_err) {
     // TODO: Handle error
     console.error("Failed to add vote to application", app_err);
