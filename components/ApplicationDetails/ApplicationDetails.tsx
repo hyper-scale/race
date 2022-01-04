@@ -197,7 +197,7 @@ const ApplicationDetails: React.FunctionComponent<Props> = ({ data }) => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full lg:w-2/3">
             {data.votes.map((voter: IVoter, i: any) => (
               <Voter
-                voter={voter.voter}
+                voter={voter.username!}
                 key={i}
                 image={voter.image}
                 //power={voter.power}
