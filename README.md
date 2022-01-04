@@ -1,27 +1,39 @@
-# Hyperscale Race
+# Hyperscale
 
 What we are building: https://docs.google.com/document/d/1X558K8dC4OCcrbjK2ZMK0sjOSu6SLg6Awk9C9yaMXHI/edit
 
 Figma designs to replicate: https://www.figma.com/file/CPfZkeob1dtxStjSuUUXDs/HyperscalePaid
 
+## The stack
+**React** - we're using React because it's so well known and supported.
+
+**Next.js** - for server-side rendering and the SEO benefits that come with this. 
+
+**Typescript** - Applying types to our JavaScript, to avoid errors as we scale and for quicker debugging.
+
+**MongoDB** - to read and write JSON data to the DB in native JavaScript, and scale effortlessly.
+
+**Docker** - for ease and consistent local dev environments.
+
 ## Getting Started
 
 ### Dev enviroment
-First, clone the repo into a new folder (if you haven't yet):
+First, fork this repo. Then, clone your forked repo:
 
 ```sh
-git clone https://github.com/hyper-scale/race.git .
+$ git clone https://github.com/<myGHProfile>/race.git .
 ```
+(To keep your fork up to date with main, 'Fetch upstream' in your forked GitHub repo and ```$ git pull``` from local.
 
-Next start dev enviroment:
+Next start dev environment. We're using Docker as standard (download here https://docs.docker.com/get-docker/) and then...
 
 ```sh
 $ docker-compose up -d --build
 ```
 
-Verify that mongo and web services are running:
+Verify that mongo and web services are running with ```$ docker-compose ps```:
 ```
-$ docker-compose ps
+
           Name                        Command                  State                          Ports
 -----------------------------------------------------------------------------------------------------------------------
 mongo                      docker-entrypoint.sh mongod      Up (healthy)   0.0.0.0:27017->27017/tcp,:::27017->27017/tcp
@@ -64,7 +76,7 @@ Set up:
 
 ## Linting and formatting
 
-Don't forget to check your code before creating a Pull Request:
+**Don't forget to check your code before creating a Pull Request:**
 
 ```sh
 docker-compose exec web yarn lint
@@ -88,7 +100,14 @@ docker-compose exec web yarn test # or test:watch for running tests in watch-mod
 
 ## Contributing
 
-Pull Requests are welcome and encouraged! Make an issue first, and create a PR to assign it to yourself. Mark it for review when ready and we'll check to merge it.
+### Roadmap, planning and tasks
+We manage the project on Trello. Request access on our Discord server: https://discord.com/invite/pVSbzYny2c 
+
+### Bug reporting
+Bugs should be reported in the #bugs channel on our Discord server: https://discord.com/invite/pVSbzYny2c
+
+### Pull Requests
+PRs are welcome and encouraged! Make an issue first, and create a PR to assign it to yourself. Mark it for review when ready and we'll check to merge it.
 
 Contribution process borrows from [Collective Code Construction Contract](https://rfc.zeromq.org/spec/44/) (C4). Most important points:
 
