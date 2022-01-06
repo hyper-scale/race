@@ -52,9 +52,9 @@ const Header: React.FunctionComponent = () => {
           >
             Discord
           </a>
-          <Button color="primary" onClick={discordBtnProps.onClick}>
+          {/* <Button color="primary" onClick={discordBtnProps.onClick}>
             {discordBtnProps.text}
-          </Button>
+          </Button> */}
         </div>
         {/* Mobile Navigation */}
         <div className="-mr-2 flex items-center md:hidden">
@@ -111,9 +111,9 @@ const Header: React.FunctionComponent = () => {
                   Discord
                 </a>
               </div>
-              <Button color="primary" onClick={discordBtnProps.onClick}>
+              {/* <Button color="primary" onClick={discordBtnProps.onClick}>
                 {discordBtnProps.text}
-              </Button>
+              </Button> */}
             </div>
           </Popover.Panel>
         </Transition>
