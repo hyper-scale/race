@@ -31,7 +31,7 @@ const Layout: React.FunctionComponent<Props> = ({ narrow = true, title = "Hypers
         }}
       >
         <div className="flex justify-center">
-          <div className="w-full max-w-7xl px-4 xl:px-0">
+          <div className="absolute h-full w-full max-w-7xl px-4 xl:px-0">
             <Header />
           </div>
         </div>
