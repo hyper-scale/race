@@ -101,10 +101,10 @@ const Home: React.FunctionComponent<Props> = ({ projects }) => {
                 </p>
                 <div className="mt-8 sm:max-w-lg sm:mx-auto">
                   <a
-                    href={airtableUrl}
-                    className="inline-flex items-center px-8 py-2 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-indigo-500 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    // href={airtableUrl}
+                    className="cursor-pointer inline-flex items-center px-8 py-2 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-indigo-500 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
-                    Join
+                    Join - coming soon
                   </a>
                 </div>
               </div>
@@ -181,10 +181,10 @@ const Home: React.FunctionComponent<Props> = ({ projects }) => {
         <div className="flex justify-center column mt-4">
           <div className="mt-8 sm:max-w-lg sm:mx-auto">
             <a
-              href={airtableUrl}
-              className="inline-flex items-center px-8 py-2 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-indigo-500 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              // href={airtableUrl}
+              className="cursor-pointer inline-flex items-center px-8 py-2 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-indigo-500 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Join the DAO Race
+              Join the DAO Race - coming soon
             </a>
           </div>
         </div>{" "}
