@@ -5,7 +5,7 @@ type Props = {
   el?: "a";
   size?: "large";
   responsive?: boolean;
-  color?: "dark" | "primary" | "gray" | "primary-outline";
+  color?: "dark" | "primary" | "gray" | "primary-outline" | "sphere-blue";
   onClick: () => void;
   href?: string;
   target?: string;
@@ -37,6 +37,9 @@ const Button: React.FunctionComponent<Props> = ({
   }
   if (color === "gray") {
     classes.push("text-gray-600", "border", "border-gray-300", "bg-gray-100", "hover:bg-gray-200");
+  }
+  if (color === "sphere-blue"){
+    classes.push("text-[#160A2F]", "border", "border-gray-300", "bg-[#BAC4FA]", "hover:bg-gray-200");
   }
   if (responsive) {
     classes.push("w-full", "sm:w-max");

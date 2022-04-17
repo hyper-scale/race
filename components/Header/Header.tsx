@@ -16,18 +16,23 @@ const Header: React.FunctionComponent = () => {
     onClick: status === "authenticated" ? () => signOut() : () => signIn("discord"),
   };
 
+  const joinBtnProps = {
+    text: status === "authenticated" ? "Sign Out" : "Apply for funding",
+    // onClick: status === "authenticated" ? () => signOut() : () => signIn("discord"),
+  };
+
   return (
     <nav>
       <Popover className="flex items-center justify-items-center justify-between">
         <Link href="/">
           <a className="flex items-center gap-x-4">
-            <Image src="/logo.svg" width="40" height="40" alt="" />
-            <Image src="/hyperscale.svg" width="150" height="80" alt="" />
+            <Image src="/img/logo_white.svg" width="40" height="40" alt="" />
+            <Image src="/img/hyperscale_white.svg" width="150" height="80" alt="" className="fill-white"/>
           </a>
         </Link>
         {/* Desktop Navigation */}
-        <div className="hidden md:flex md:items-center space-x-0 xl:space-x-2 text-redrose">
-          <a
+        <div className="hidden md:flex md:items-center space-x-0 xl:space-x-8 text-redrose">
+          {/* <a
             href="#"
             onClick={() => router.push({ pathname: "/dao-directory" })}
             className="px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-opacity-30"
@@ -35,26 +40,26 @@ const Header: React.FunctionComponent = () => {
             target=""
           >
             DAO Directory
-          </a>
+          </a> */}
           <a
             href="https://twitter.com/HyperscaleFund"
-            className="px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-opacity-30"
+            className="px-3 py-2 rounded-md text-base text-white font-base hover:bg-opacity-30 font-sans"
             rel="external noreferrer"
             target="_blank"
           >
-            Twitter
+            Twitter 
           </a>
           <a
             href="https://discord.com/invite/pVSbzYny2c"
-            className="px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-opacity-30"
+            className="px-3 py-2 rounded-md text-base text-white font-base bg-gray-300hover:bg-opacity-30 font-sans"
             rel="external noreferrer"
             target="_blank"
           >
             Discord
           </a>
-          {/* <Button color="primary" onClick={discordBtnProps.onClick}>
-            {discordBtnProps.text}
-          </Button> */}
+          <Button color="sphere-blue" className="rounded-sm" onClick={joinBtnProps.onClick}>
+            {joinBtnProps.text}
+          </Button>
         </div>
         {/* Mobile Navigation */}
         <div className="-mr-2 flex items-center md:hidden">
